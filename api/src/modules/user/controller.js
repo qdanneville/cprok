@@ -17,7 +17,7 @@ import ProjectServices from "./service"
 const UserController = {
     allProjects : (req, res) => {
         ProjectServices.allProjects(req, result => {
-            console.log(result);
+            // console.log(result);
         })
     }
 }

@@ -1,7 +1,6 @@
 import express from "express"
 
-import userRoutes from "../modules/user/routes"
-import projectRoutes from "../modules/user/routes"
+import projectRoutes from "../modules/project/routes"
 
 const Router = (app) => {
     var apiRoutes = express.Router();
@@ -14,9 +13,7 @@ const Router = (app) => {
     //User router
     app.use('/api/', apiRoutes);
 
-    app.use('/api/project', userRoutes);
     app.use('/api/project', projectRoutes);
-    
 }
 
 export default Router

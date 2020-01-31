@@ -1,6 +1,12 @@
+import ProjectQueries from "./query"
+
 const ProjectServices = {
     allProjects: (req, callback) => {
-        console.log(req);
+        ProjectQueries.getAllProjects(req, response => {
+            return callback({ success: true, message: response });
+        }, error => {
+            return callback({ success: false, message: error });
+        });
     }
 }
 

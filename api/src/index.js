@@ -5,8 +5,6 @@ import express from 'express'
 import setupServer from './setup/server'
 import setupStartServer from "./setup/start-server"
 
-import databaseConnection from "./setup/database"
-
 // Create express server
 const server = express()
 

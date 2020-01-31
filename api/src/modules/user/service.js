@@ -20,10 +20,10 @@
 // export default UserService;
 
 
-const ProjectServices = {
-    allProjects: (req, callback) => {
-        console.log(req);
-    }
-}
+// const ProjectServices = {
+//     allProjects: (req, callback) => {
+//         console.log(req);
+//     }
+// }
 
-export default ProjectServices;
+// export default ProjectServices;
