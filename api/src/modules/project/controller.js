@@ -1,10 +1,10 @@
 import ProjectServices from "./service"
 
 const ProjectController = {
-    allProjects : (req, res) => {
+    allProjects: (req, res) => {
         ProjectServices.allProjects(req, result => {
             //Will be executed once the service is finished
-            res.send(200, result);
+            result.success ? res.status(200).send(result) : res.status(404).send(result)
         })
     }
 }

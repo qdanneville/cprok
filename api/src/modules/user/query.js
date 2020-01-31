@@ -4,7 +4,7 @@ import db from "../../setup/database";
 const Query = {
     create: (param, successCallback, failureCallback) => {
 
-        let q = "SELECT * FROM `project`";
+        let q = "SELECT * FROM `qdqdds`";
 
         db.query(q, (err, rows, fields, res) => {
             if (err) {

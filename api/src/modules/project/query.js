@@ -13,7 +13,7 @@ const Query = {
             if (rows.length > 0) {
                 return successCallback(rows);
             } else {
-                return failureCallback("No projects.");
+                return successCallback("No projects.");
             }
         })
     }
