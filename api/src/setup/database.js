@@ -1,11 +1,12 @@
-import mysql from "mysql"
+import mysql, { Connection } from "mysql2"
 import databaseConfig from "../config/database"
 
-var connection = mysql.createConnection({
-    host: databaseConfig.host,
-    user: databaseConfig.username,
-    password: databaseConfig.password,
-    database: databaseConfig.database
+const connection = mysql.createConnection({
+    host: databaseConfig.development.host,
+    user: databaseConfig.development.username,
+    password: databaseConfig.development.password,
+    database: databaseConfig.development.database,
+    socketPath: databaseConfig.development.socketPath
 });
 
 //Connecting to database
@@ -18,6 +19,4 @@ connection.connect((err) => {
     console.log("connected as id " + connection.threadId);
 });
 
-db.create = (params, successCallback, failureCallback) => {
-    console.log(params);
-}
+export default connection
