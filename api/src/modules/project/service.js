@@ -1,14 +1,23 @@
 import ProjectQueries from "./query"
 
 const ProjectServices = {
-    allProjects: (req, callback) => {
-        ProjectQueries.getAllProjects(req, 
-        response => {
-            return callback({ success: true, message: response });
-        }, 
-        error => {
-            return callback({ success: false, message: error });
-        });
+    getAll: (req, callback) => {
+        ProjectQueries.getAll(req,
+            response => {
+                return callback({ success: true, message: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
+    },
+    getById: (id, callback) => {
+        ProjectQueries.getById(id,
+            response => {
+                return callback({ success: true, message: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
     }
 }
 

@@ -15,7 +15,7 @@ const Router = (app) => {
     //User router
     app.use('/api/', apiRoutes);
 
-    app.use('/api/project', projectRoutes);
+    app.use('/api/projects', projectRoutes);
     app.use('/api/pages', pageRoutes);
     app.use('/api/users', userRoutes);
 }

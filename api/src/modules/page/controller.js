@@ -1,6 +1,6 @@
 import PageServices from "./service"
 
-const ProjectController = {
+const PageController = {
     getAll: (req, res) => {
         PageServices.getAll(req, result => {
             //Will be executed once the service is finished
@@ -15,4 +15,4 @@ const ProjectController = {
     }
 }
 
-export default ProjectController
+export default PageController

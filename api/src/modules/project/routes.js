@@ -3,6 +3,7 @@ const router = express.Router();
 
 import ProjectController from "./controller"
 
-router.get('/all', ProjectController.allProjects);
+router.get('/', ProjectController.getAll);
+router.get('/:id', ProjectController.getById);
 
 export default router
