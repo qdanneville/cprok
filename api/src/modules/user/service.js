@@ -1,29 +1,48 @@
-// import userQuery from "./query"
+import UserQueries from "./query"
 
+const UserServices = {
+    getAll: (req, callback) => {
+        UserQueries.getAll(req,
+            response => {
+                return callback({ success: true, message: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
+    },
+    getById: (id, callback) => {
+        UserQueries.getById(id,
+            response => {
+                return callback({ success: true, message: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
+    },
+    authenticate: (body, callback) => {
+        let { username, password } = body;
 
-// // Notre service s'occupe de lancer la requête et de renvoyer la réponse de la base de données au controller
-// const UserService = {
-//     authenticate: (body, callback) => {
+        UserQueries.authenticate({ username, password },
+            response => {
 
-//         userQuery.create(body, res => {
-//             console.log('services res', res);
-//             return callback({ success: true, message: res });
-//         },
-//             err => {
-//                 console.log('err query', err);
-//                 return callback({ success: false, message: 'Nope error' });
-//             })
+                return callback({ success: true, message: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
+    },
+    register: (body, callback) => {
+        let { firstname, lastname, password, username } = body;
 
-//     }
-// }
+        UserQueries.register({ firstname, lastname, password, username },
+            response => {
 
-// export default UserService;
+                return callback({ success: true, message: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
+    }
+}
 
-
-// const ProjectServices = {
-//     allProjects: (req, callback) => {
-//         console.log(req);
-//     }
-// }
-
-// export default ProjectServices;
+export default UserServices;

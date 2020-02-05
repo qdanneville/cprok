@@ -26,7 +26,7 @@ const Query = {
                 return failureCallback(err);
             }
             if (rows.length > 0) {
-                return successCallback(rows);
+                return successCallback(rows[0]);
             } else {
                 return successCallback("No matching page");
             }
