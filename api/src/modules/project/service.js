@@ -18,6 +18,15 @@ const ProjectServices = {
             error => {
                 return callback({ success: false, message: error });
             });
+    },
+    getByUserId: (userId, callback) => {
+        ProjectQueries.getByUserId(userId,
+            response => {
+                return callback({ success: true, message: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
     }
 }
 

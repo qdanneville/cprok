@@ -31,6 +31,20 @@ const Queries = {
                 return successCallback("No matching project");
             }
         })
+    },
+    getByUserId: (userID, successCallback, failureCallback) => {
+        let sqlQuery = `SELECT * FROM project, user_has_project where project.id = user_has_project.project_id AND user_has_project.user_id = '${userID}'`;
+
+        db.query(sqlQuery, (err, rows) => {
+            if (err) {
+                return failureCallback(err);
+            }
+            if (rows.length > 0) {
+                return successCallback(rows);
+            } else {
+                return successCallback("User has no projects");
+            }
+        })
     }
 }
 
