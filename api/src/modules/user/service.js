@@ -25,7 +25,7 @@ const UserServices = {
         UserQueries.authenticate({ username, password },
             response => {
 
-                return callback({ success: true, message: response });
+                return callback({ success: true, message: 'User is correctly authenticated', data: response });
             },
             error => {
                 return callback({ success: false, message: error });
@@ -36,7 +36,6 @@ const UserServices = {
 
         UserQueries.register({ firstname, lastname, password, username },
             response => {
-
                 return callback({ success: true, message: response });
             },
             error => {

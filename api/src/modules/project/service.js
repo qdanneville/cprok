@@ -4,7 +4,7 @@ const ProjectServices = {
     getAll: (req, callback) => {
         ProjectQueries.getAll(req,
             response => {
-                return callback({ success: true, message: response });
+                return callback({ success: true, message: 'Projects successfuly retrieved', data: response });
             },
             error => {
                 return callback({ success: false, message: error });
@@ -22,7 +22,7 @@ const ProjectServices = {
     getByUserId: (userId, callback) => {
         ProjectQueries.getByUserId(userId,
             response => {
-                return callback({ success: true, message: response });
+                return callback({ success: true, message: 'Projects successfuly retrieved', data: response });
             },
             error => {
                 return callback({ success: false, message: error });

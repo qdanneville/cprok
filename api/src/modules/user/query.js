@@ -42,7 +42,7 @@ const Queries = {
                 return failureCallback(err);
             }
             if (rows.length > 0) {
-                return successCallback("User correclty authenticated");
+                return successCallback(rows[0]);
             } else {
                 return successCallback("Incorrect username or password combinaison");
             }
