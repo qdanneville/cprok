@@ -32,6 +32,16 @@ const Queries = {
             }
         })
     },
+    getByUsername: (username) => {
+        let sqlQuery = `SELECT * FROM user WHERE username="${username}"`;
+
+        return new Promise((resolve, reject) => {
+            db.query(sqlQuery, (err, rows) => {
+                if (err) reject(err)
+                resolve(rows[0])
+            })
+        })
+    },
     authenticate: (user, successCallback, failureCallback) => {
 
         let sqlQuery = `SELECT * FROM USER WHERE username="${user.username}" AND password="${user.password}"`;
@@ -48,17 +58,14 @@ const Queries = {
             }
         })
     },
-    register: (user, successCallback, failureCallback) => {
+    register: async (user) => {
+        return new Promise((resolve, reject) => {
+            let sqlQuery = `INSERT INTO user (id, firstname, lastname, password, username) VALUES (NULL, "${user.firstname}", "${user.lastname}", "${user.hashedPassword}", "${user.username}");`;
 
-        let sqlQuery = `INSERT INTO user (id, firstname, lastname, password, username) VALUES (NULL, "${user.firstname}", "${user.lastname}", "${user.password}", "${user.username}");`;
-
-        db.query(sqlQuery, (err, rows) => {
-
-            if (err) {
-                return failureCallback(err);
-            }
-
-            return successCallback("New user successfuly created");
+            db.query(sqlQuery, (err, res) => {
+                if (err) reject(err)
+                resolve(res);
+            })
         })
     }
 }
