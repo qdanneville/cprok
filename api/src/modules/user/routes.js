@@ -1,11 +1,13 @@
 import express from "express"
-const router = express.Router();
 
 import UserController from "./controller"
+import authorize from "../../helpers/authorize"
+
+const router = express.Router();
 
 //Private routes, only accessible by admin rights
-router.get('/', UserController.getAll);
-router.get('/:id', UserController.getById);
+router.get('/', authorize('Admin'), UserController.getAll);
+router.get('/:id', authorize(), UserController.getById);
 
 //Public routes
 router.post('/authenticate', UserController.authenticate);

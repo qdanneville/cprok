@@ -42,25 +42,9 @@ const Queries = {
             })
         })
     },
-    authenticate: (user, successCallback, failureCallback) => {
-
-        let sqlQuery = `SELECT * FROM USER WHERE username="${user.username}" AND password="${user.password}"`;
-
-        db.query(sqlQuery, (err, rows) => {
-
-            if (err) {
-                return failureCallback(err);
-            }
-            if (rows.length > 0) {
-                return successCallback(rows[0]);
-            } else {
-                return successCallback("Incorrect username or password combinaison");
-            }
-        })
-    },
     register: async (user) => {
         return new Promise((resolve, reject) => {
-            let sqlQuery = `INSERT INTO user (id, firstname, lastname, password, username) VALUES (NULL, "${user.firstname}", "${user.lastname}", "${user.hashedPassword}", "${user.username}");`;
+            let sqlQuery = `INSERT INTO user (id, firstname, lastname, password, username, role_name) VALUES (NULL, "${user.firstname}", "${user.lastname}", "${user.hashedPassword}", "${user.username}", "User");`;
 
             db.query(sqlQuery, (err, res) => {
                 if (err) reject(err)

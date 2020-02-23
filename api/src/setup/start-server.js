@@ -1,13 +1,15 @@
 // Start server
 
+import config from "../config/server"
+
 const StartServer = (server) => {
     console.info('SETUP - Starting server..')
 
-    server.listen(3000, (error) => {
+    server.listen(config.port, (error) => {
         if (error) {
             console.error('ERROR - Unable to start server.')
         } else {
-            console.info(`INFO - Server started on http://localhost:${3000} [DEV]`)
+            console.info(`INFO - Server started on http://localhost:${config.port} [DEV]`)
         }
     })
 }

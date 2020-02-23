@@ -1,6 +1,9 @@
 import UserQueries from "./query"
 
-import brcrypt, { hash } from "bcrypt"
+import brcrypt from "bcrypt"
+
+import jwt from "jsonwebtoken"
+import config from "../../config/server"
 
 const UserServices = {
     getAll: (req, callback) => {
@@ -28,23 +31,30 @@ const UserServices = {
             return { status: 400, payload: { success: false, message: "All fields are required and must be a string type" } }
         }
 
-        return UserQueries.getByUsername(username)
-            .then(user => brcrypt.compare(password, user.password))
-            .then(matchingPassword => matchingPassword
-                ? ({ status: 200, payload: { success: true, message: 'User correctly authenticated', data: { 'token': 'soon' } } })
-                : ({ status: 403, payload: { success: false, message: 'Username & password missmatch' } }))
-            .catch(err => ({ status: 400, payload: { success: false, message: err } }))
+        const user = await UserQueries.getByUsername(username);
+
+        if (!user) {
+            return { status: 403, payload: { success: false, message: 'Username not found' } }
+        }
+
+        const passwordMatched = await brcrypt.compare(password, user.password);
+
+        if (passwordMatched) {
+            const token = jwt.sign({ id: user.id, role: user.role_name }, config.secret);
+            const { password, ...userWithoutPassword } = user;
+            return ({ status: 200, payload: { success: true, message: 'User correctly authenticated', data: { 'token': token, user: { ...userWithoutPassword } } } })
+        }
+
+        return { status: 403, payload: { success: false, message: 'Username & password missmatch' } }
     },
     register: async (body) => {
 
         let { firstname, lastname, password, username } = body;
 
-        // Type validator
         if (typeof firstname !== "string" || typeof lastname !== "string" || typeof password !== "string" || typeof username !== "string") {
             return { status: 400, payload: { success: false, message: "All fields are required and must be a string type" } }
         }
 
-        // Chained actions
         return brcrypt.genSalt()
             .then(salt => brcrypt.hash(password, salt))
             .then(hashedPassword => UserQueries.register({ firstname, lastname, hashedPassword, username }))
