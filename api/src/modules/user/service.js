@@ -41,8 +41,10 @@ const UserServices = {
 
         if (passwordMatched) {
             const token = jwt.sign({ id: user.id, role: user.role_name }, config.secret);
+
             const { password, ...userWithoutPassword } = user;
-            return ({ status: 200, payload: { success: true, message: 'User correctly authenticated', data: { 'token': token, user: { ...userWithoutPassword } } } })
+
+            return ({ status: 200, payload: { success: true, message: 'User correctly authenticated', data: { 'token': token, user: userWithoutPassword } } })
         }
 
         return { status: 403, payload: { success: false, message: 'Username & password missmatch' } }

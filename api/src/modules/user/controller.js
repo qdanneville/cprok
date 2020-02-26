@@ -17,7 +17,7 @@ const UserController = {
         UserServices.authenticate(req.body)
             .then(result => res.status(result.status).send(result.payload))
     },
-    register: async (req, res) => {
+    register: (req, res) => {
         UserServices.register(req.body)
             .then(result => res.status(result.status).send(result.payload))
     }
