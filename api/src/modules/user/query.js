@@ -42,7 +42,7 @@ const Queries = {
             })
         })
     },
-    register: async (user) => {
+    register: (user) => {
         return new Promise((resolve, reject) => {
             let sqlQuery = `INSERT INTO user (id, firstname, lastname, password, username, role_name) VALUES (NULL, "${user.firstname}", "${user.lastname}", "${user.hashedPassword}", "${user.username}", "User");`;
 
