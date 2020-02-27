@@ -1,0 +1,24 @@
+{
+  "name": "cprok",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel ./src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://QuentinDanneville@github.com/qdanneville/cprok.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qdanneville/cprok/issues"
+  },
+  "homepage": "https://github.com/qdanneville/cprok#readme",
+  "devDependencies": {
+    "less": "^3.11.1",
+    "parcel-bundler": "^1.12.4"
+  }
+}
