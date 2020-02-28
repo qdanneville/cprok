@@ -15,14 +15,51 @@ form {
   display: block;
   padding: 20px;
 
-  border:solid 3px #222;
+  border: solid 3px #222;
   border-radius: 4px;
   background-color: grey;
 
   text-align: center;
 
+  animation: appear forwards 0.25s ease;
+
   input {
     display: block;
     margin: 10px 0;
+  }
+}
+
+.loader {
+  text-align: center;
+
+  width: 25px;
+  height: 25px;
+
+  background-color: #222;
+
+  animation: rotate infinite ease 1s;
+
+  &.hide {
+    display: none;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
