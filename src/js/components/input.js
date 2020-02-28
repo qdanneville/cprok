@@ -8,8 +8,8 @@ class Input {
 
         this.element = document.createElement('input');
         this.element.id = this.id;
-        this.element.value = this.value;
         this.element.placeholder = this.placeholder;
+        this.element.required = true;
 
         this.handleChange = this.handleChange.bind(this)
         this.element.addEventListener('change', this.handleChange);

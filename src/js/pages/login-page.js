@@ -1,11 +1,12 @@
 import Input from "../components/input"
 
 class LoginPage {
-    constructor(parent, id) {
+    constructor(parent, id, callback) {
 
         //Our form's wrapper
         this.parent = parent;
         this.id = id;
+        this.callback = callback;
 
         //Our form
         this.element = document.createElement('form');
@@ -43,10 +44,6 @@ class LoginPage {
 
         this.parent.append(this.element);
 
-        //We're initiating our Input components
-        this.username.init();
-        this.password.init();
-
         //We're finally calling our submit button as the last child of our form
         this.element.append(this.submitElement);
         this.element.appendChild(this.loaderElement);
@@ -71,7 +68,9 @@ class LoginPage {
             body: JSON.stringify(body) // body data type must match "Content-Type" header
         }).then(response => {
             response.json().then(data => {
-                console.log(data);
+
+                if (data.data) this.callback(data.data.user.firstname);
+
                 this.state.loading = false
                 this.render();
             })
