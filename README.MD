@@ -10,8 +10,8 @@ Chaque apprenant doit pouvoir se situer par rapport au niveau global de la promo
 # TODO
 
 Étape de Conception, concevoir une base de données : NIVEAU 1  
-* [ ] Description de l'application, explication & pitch  
-* [ ] Définir les différentes entités (modèles)  
+* [x] Description de l'application, explication & pitch  
+* [x] Définir les différentes entités (modèles)  
 * [ ] Faire un MCD sur http://www.mocodo.net/ - Auto formation si nécessaires sur ce point  
 * [ ] Faire un MPD - Schéma de base de données - Auto formation si nécessaires sur ce point  
 
