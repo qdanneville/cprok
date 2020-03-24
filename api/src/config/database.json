@@ -2,7 +2,7 @@
     "development": {
       "username": "root",
       "password": "root",
-      "database": "cprok_portfolio",
+      "database": "skill-tree",
       "host": "localhost",
       "dialect": "mysql",
       "socketPath": "/Applications/MAMP/tmp/mysql/mysql.sock"
@@ -10,7 +10,7 @@
     "production": {
       "username": "root",
       "password": "root",
-      "database": "cprok_portfolio",
+      "database": "skill_tree",
       "host": "localhost",
       "dialect": "mysql"
     }

@@ -4,7 +4,7 @@ import db from "../../setup/database";
 const Queries = {
     getAll: (param, successCallback, failureCallback) => {
 
-        let sqlQuery = "SELECT * FROM `user`";
+        let sqlQuery = "SELECT * FROM `padawans`";
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -19,7 +19,7 @@ const Queries = {
     },
     getById: (id, successCallback, failureCallback) => {
 
-        let sqlQuery = `SELECT * FROM user WHERE ID=${id}`;
+        let sqlQuery = `SELECT * FROM padawans WHERE ID=${id}`;
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -33,7 +33,10 @@ const Queries = {
         })
     },
     getByUsername: (username) => {
-        let sqlQuery = `SELECT * FROM user WHERE username="${username}"`;
+        let sqlQuery = `SELECT *
+        from padawans, login_profile
+        WHERE padawans.id = login_profile.user_id
+        AND login_profile.username = ${username}`;
 
         return new Promise((resolve, reject) => {
             db.query(sqlQuery, (err, rows) => {
@@ -42,9 +45,19 @@ const Queries = {
             })
         })
     },
+    createLoginProfile: (user) => {
+        return new Promise((resolve, reject) => {
+            let sqlQuery = `INSERT INTO login_profile (id, username, password, user_id) VALUES (NULL, "${user.username}", "${user.hashedPassword}","${user.id}");`;
+
+            db.query(sqlQuery, (err, res) => {
+                if (err) reject(err)
+                resolve(res);
+            })
+        })
+    },
     register: (user) => {
         return new Promise((resolve, reject) => {
-            let sqlQuery = `INSERT INTO user (id, firstname, lastname, password, username, role_name) VALUES (NULL, "${user.firstname}", "${user.lastname}", "${user.hashedPassword}", "${user.username}", "User");`;
+            let sqlQuery = `INSERT INTO padawans (id, firstname, lastname, email) VALUES (NULL, "${user.firstname}", "${user.lastname}","${user.email}");`;
 
             db.query(sqlQuery, (err, res) => {
                 if (err) reject(err)

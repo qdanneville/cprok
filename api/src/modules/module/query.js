@@ -4,7 +4,7 @@ import db from "../../setup/database";
 const Queries = {
     getAll: (param, successCallback, failureCallback) => {
 
-        let sqlQuery = "SELECT * FROM `project`";
+        let sqlQuery = "SELECT * FROM `modules`";
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -13,13 +13,13 @@ const Queries = {
             if (rows.length > 0) {
                 return successCallback(rows);
             } else {
-                return successCallback("No project.");
+                return successCallback("No module.");
             }
         })
     },
     getById: (id, successCallback, failureCallback) => {
 
-        let sqlQuery = `SELECT * FROM project WHERE ID=${id}`;
+        let sqlQuery = `SELECT * FROM module WHERE ID=${id}`;
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -28,24 +28,14 @@ const Queries = {
             if (rows.length > 0) {
                 return successCallback(rows[0]);
             } else {
-                return successCallback("No matching project");
+                return successCallback("No matching module");
             }
         })
     },
-    getByUserId: (userID, successCallback, failureCallback) => {
-        let sqlQuery = `SELECT * FROM project, user_has_project where project.id = user_has_project.project_id AND user_has_project.user_id = '${userID}'`;
-
-        db.query(sqlQuery, (err, rows) => {
-            if (err) {
-                return failureCallback(err);
-            }
-            if (rows.length > 0) {
-                return successCallback(rows);
-            } else {
-                return successCallback("User has no projects");
-            }
-        })
-    }
 }
 
 export default Queries
+
+
+// Skills ordered by module
+// SELECT modules.name, skills.name from skills, modules WHERE skills.module_id = modules.id GROUP BY modules.name, skills.name
