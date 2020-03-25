@@ -11,5 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     //Home page
     if (url.pathname === ('/')) return App({ root: appRoot, component: 'home', location: url });
     else if (url.pathname.includes('skills')) return App({ root: appRoot, component: 'skill', location: url });
+    else if (url.pathname.includes('login')) return App({ root: appRoot, component: 'login', location: url });
 
 });

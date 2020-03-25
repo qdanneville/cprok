@@ -16,8 +16,8 @@ const server = (server) => {
     server.use(cors())
 
     // Request body parser
+    server.use(bodyParser.urlencoded({ extended: true }))
     server.use(bodyParser.json())
-    server.use(bodyParser.urlencoded({ extended: false }))
 
     // Request body cookie parser
     server.use(cookieParser())
