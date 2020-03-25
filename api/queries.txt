@@ -1,0 +1,19 @@
+update padawan level 
+
+UPDATE `padawan_has_skills` SET id_level =2 WHERE padawan_has_skills.id_padawan = 1 and padawan_has_skills.id_skill = 5
+
+Get all padawans from a skill & level
+
+
+Get all padawans from comp 6 & level 1
+SELECT padawans.firstname
+FROM padawans, padawan_has_skills
+WHERE padawans.id = padawan_has_skills.id_padawan
+AND padawan_has_skills.id_skill = 6
+AND padawan_has_skills.id_level = 1
+
+SELECT padawans.firstname
+FROM padawans, padawan_has_skills
+WHERE padawans.id = padawan_has_skills.id_padawan
+AND padawan_has_skills.id_skill = 6
+

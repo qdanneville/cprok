@@ -59,7 +59,7 @@ const UserServices = {
 
         return brcrypt.genSalt()
             .then(salt => brcrypt.hash(password, salt))
-            .then(hashedPassword => UserQueries.register({ firstname, lastname, hashedPassword, email }))
+            .then(hashedPassword => UserQueries.register({ firstname, lastname, username, hashedPassword, email }))
             .then(user => ({ status: 201, payload: { success: true, message: 'User successfully registered' } }))
             .catch(err => ({ status: 400, payload: { success: false, message: err } }))
     }
