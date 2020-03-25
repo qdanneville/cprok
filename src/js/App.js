@@ -1,4 +1,4 @@
-const App = async root => {
+const App = async ({ root, component, location }) => {
   //Node - <div id="#app"></div>
   const appEl = root;
 
@@ -13,15 +13,26 @@ const App = async root => {
   const HeaderComponent = Header({ title: 'Arbre de compétence' });
 
   //Declaring our Tree Component using our Tree function component
-  const TreeComponent = await Tree();
+  // const SkillComponent = async(props) => await Skill(props);
 
   //We're calling our function component, so it can appear within the DOM
   appEl.innerHTML = HeaderComponent;
-  appEl.appendChild(TreeComponent);
+
+  console.log('app location :', location);
+
+  //Our selfmade router
+  switch (component) {
+    case 'home':
+      return await TreeComponent({ location: location, root })
+    case 'skill':
+      return await SkillComponent({ location: location, root });
+    default:
+      return await TreeComponent({ location: location, root })
+  }
 }
 
 //This is where we're going to get modules & skills and render them within the DOM
-const Tree = async (props) => {
+const TreeComponent = async (props) => {
 
   let treeEl = document.createElement('div');
   treeEl.className = `tree`
@@ -31,7 +42,30 @@ const Tree = async (props) => {
   //Then we're adding them to the DOM
   renderModules(modules, treeEl);
 
-  return treeEl
+  //finally rendering the Tree within the dom
+  return props.root.appendChild(treeEl);
+}
+
+const SkillComponent = async (props) => {
+
+  const { location, root } = props;
+
+  const skillId = location.searchParams.get('id');
+
+  //Creating our node element
+  let skillEl = document.createElement('div');
+  skillEl.id = skillId;
+  skillEl.className = `skill`;
+
+  let skill = await getSkillById(skillId);
+
+  skillEl.innerHTML = (
+    `
+    <h1>${skill.name}</h1>
+    <p>${skill.description}</p>
+    `)
+
+  return root.appendChild(skillEl);
 }
 
 const renderModules = async (modules, root) => {
@@ -61,7 +95,7 @@ const renderModules = async (modules, root) => {
         <ul>
           ${
       moduleSkills.map(skill => {
-        return (`<li>${skill.name}</li>`)
+        return (`<li class="skill"><a href="/skills/?id=${skill.id}">${skill.name}</a></li>`)
       }).join('')
       }
         </ul>
@@ -103,6 +137,13 @@ const getSkills = async (props) => {
   let skills = await getData(`http://localhost:3000/api/skills/`);
 
   return skills.data
+}
+
+const getSkillById = async (id) => {
+
+  let skill = await getData(`http://localhost:3000/api/skills/${id}`);
+
+  return skill.data
 }
 
 const getSkillsByModuleId = async (moduleId) => {

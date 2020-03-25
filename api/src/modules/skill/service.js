@@ -13,7 +13,7 @@ const SkillServices = {
     getAllSortByModule: (req, callback) => {
         ProjectQueries.getAllSortByModule(req,
             response => {
-                return callback({ success: true, message: 'Skills successfuly retrieved', data: response });
+                return callback({ success: true, message: 'Skills successfully retrieved', data: response });
             },
             error => {
                 return callback({ success: false, message: error });
@@ -22,7 +22,7 @@ const SkillServices = {
     getById: (id, callback) => {
         ProjectQueries.getById(id,
             response => {
-                return callback({ success: true, message: response });
+                return callback({ success: true, message: 'Skill successfully retrieved', data: response });
             },
             error => {
                 return callback({ success: false, message: error });
@@ -31,7 +31,7 @@ const SkillServices = {
     getByUserId: (userId, callback) => {
         ProjectQueries.getByUserId(userId,
             response => {
-                return callback({ success: true, message: 'Skills successfuly retrieved', data: response });
+                return callback({ success: true, message: 'Skills successfully retrieved', data: response });
             },
             error => {
                 return callback({ success: false, message: error });
@@ -40,7 +40,7 @@ const SkillServices = {
     getByModuleId: (moduleId, callback) => {
         ProjectQueries.getByModuleId(moduleId,
             response => {
-                return callback({ success: true, message: 'Skills successfuly retrieved', data: response });
+                return callback({ success: true, message: 'Skills successfully retrieved', data: response });
             },
             error => {
                 return callback({ success: false, message: error });

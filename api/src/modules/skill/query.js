@@ -19,7 +19,7 @@ const Queries = {
     },
     getById: (id, successCallback, failureCallback) => {
 
-        let sqlQuery = `SELECT * FROM skill WHERE ID=${id}`;
+        let sqlQuery = `SELECT * FROM skills WHERE ID=${id}`;
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {
