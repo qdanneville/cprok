@@ -1,10 +1,24 @@
-//header function component
-const Header = (props) => `<header>${props ? props.title : 'Default app name'}</header>`
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-// ---> header function is the same as  
-// function header(props) {
-//   return `<header>${props ? props.title : 'Default app name'}</header>`
-// }
+const Header = (props) => {
 
-export default Header
+    console.log('header props : ', props);
 
+    return (
+        <header className="header">
+            <nav>
+                <ul>
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/login">Login</Link>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    )
+}
+
+export default Header;

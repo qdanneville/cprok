@@ -34,7 +34,7 @@ const UserServices = {
         const user = await UserQueries.getByUsername(username);
 
         if (!user) {
-            return { status: 403, payload: { success: false, message: 'Username not found' } }
+            return { status: 401, payload: { success: false, message: 'Username not found' } }
         }
 
         const passwordMatched = await brcrypt.compare(password, user.password);
@@ -47,7 +47,7 @@ const UserServices = {
             return ({ status: 200, payload: { success: true, message: 'User correctly authenticated', data: { 'token': token, user: userWithoutPassword } } })
         }
 
-        return { status: 403, payload: { success: false, message: 'Username & password missmatch' } }
+        return { status: 401, payload: { success: false, message: 'Username & password missmatch' } }
     },
     register: async (body) => {
 

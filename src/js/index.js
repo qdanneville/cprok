@@ -1,16 +1,10 @@
-import App from "./App"
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-// https://developer.mozilla.org/en-US/docs/Web/API/URL
-const url = new URL(window.location.href)
+import App from './App';
 
-document.addEventListener('DOMContentLoaded', () => {
+const MOUNT_NODE = document.getElementById('app');
 
-    //appRoot is a node
-    const appRoot = document.querySelector(`#app`)
+ReactDOM.render(<App/>, MOUNT_NODE);
 
-    //Home page
-    if (url.pathname === ('/')) return App({ root: appRoot, component: 'home', location: url });
-    else if (url.pathname.includes('skills')) return App({ root: appRoot, component: 'skill', location: url });
-    else if (url.pathname.includes('login')) return App({ root: appRoot, component: 'login', location: url });
 
-});

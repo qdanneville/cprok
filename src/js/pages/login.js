@@ -1,58 +1,56 @@
-import { authenticate } from '../utils/api'
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'
+
+import api, { addAuth } from '../utils/api';
+import { setUser } from '../utils/local-storage'
+
 
 const Login = (props) => {
+    let history = useHistory();
 
-    const { location, root } = props;
-
-    const handleChange = (event) => {
-        // console.log(event.target.value);
-    }
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [errors, setErrors] = useState(null);
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (!username.value && !password.value) {
-            return errors.innerHTML = `Password & username can't be empty :)`
-        }
+        setErrors(null);
 
-        authenticate({ username: username.value, password: password.value }).then(data => {
-            console.log(data)
-        })
+        api
+            .post('/users/authenticate',
+                { username, password })
+            .then(response => {
+                setUser(response.data.data.user);
+                console.log(response.data.data.token);
+                addAuth(response.data.data.token);
+                history.replace({ pathname: "/" });
+            })
+            .catch(error => {
+                return setErrors('Username or password missmatch');
+            })
+
     }
 
-    let loginEl = document.createElement('section');
-    loginEl.className = 'login';
-
-    let formEl = document.createElement('form');
-    formEl.addEventListener('submit', handleSubmit);
-
-    let username = document.createElement('input');
-    username.type = 'text';
-    username.placeholder = 'username';
-    username.addEventListener('change', handleChange);
-
-    let password = document.createElement('input');
-    password.type = 'password';
-    password.placeholder = 'password';
-    password.addEventListener('change', handleChange);
-
-
-    let button = document.createElement('button');
-    button.innerText = 'Login';
-
-    let errors = document.createElement('span');
-
-    formEl.appendChild(username);
-    formEl.appendChild(password);
-    formEl.appendChild(button);
-    formEl.appendChild(errors);
-
-
-    loginEl.appendChild(formEl)
-
-    return root.appendChild(loginEl);
+    return (
+        <>
+            <h1>Login</h1>
+            <form onSubmit={handleSubmit}>
+                <div className="">
+                    <label>Username</label>
+                    <input onChange={(e) => setUsername(e.target.value)} type="text" name="username" required />
+                </div>
+                <div className="">
+                    <label>Password</label>
+                    <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" required />
+                </div>
+                <div className="">
+                    <span>{errors}</span>
+                </div>
+                <button type="submit">login</button>
+            </form>
+        </>
+    )
 }
-
-
 
 export default Login
