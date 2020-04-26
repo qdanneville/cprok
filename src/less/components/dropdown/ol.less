@@ -1,0 +1,16 @@
+.ol-0 {
+  .list-none;
+  .m-0;
+  .p-0;
+
+  counter-reset: ol-counter;
+
+  li {
+    counter-increment: ol-counter;
+
+    &:before {
+      content: counter(ol-counter) " ";
+      .mr-4;
+    }
+  }
+}

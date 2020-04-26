@@ -1,0 +1,33 @@
+.select-default {
+  &:focus {
+    + .select-arrow {
+      svg {
+        .rotate-180;
+      }
+    }
+  }
+}
+
+.select-arrow.active {
+  svg {
+    .rotate-180 !important;
+  }
+}
+
+.select-arrow  {
+  svg {
+    .transition;
+    .origin-center;
+    .rotate-0;
+  }
+}
+
+.select-default {
+  + .select-arrow {
+    svg {
+      .transition;
+      .origin-center;
+      .rotate-0;
+    }
+  }
+}

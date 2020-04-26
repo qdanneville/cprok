@@ -1,0 +1,51 @@
+.radio-button {
+  .relative;
+
+  input {
+    .appearance-0;
+    .outline-0;
+    .rounded-full;
+    .w-5;
+    .h-5;
+
+    .bs-solid;
+    .bc-dark-blue;
+    .bw-1;
+    .bg-white;
+    .transition;
+
+    &:checked {
+      + .radio-background {
+        display: block;
+      }
+    }
+  }
+
+  .radio-background {
+    display: none;
+    .absolute;
+    .pin-y;
+    .pin-l;
+
+    width: 12px;
+    height: 12px;
+
+    top: 50%;
+    left: 0;
+
+    transform: translate3d(4px, -50%, 0);
+
+    .bg-blue-dark;
+    .rounded-full;
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    user-select: none;
+    pointer-events: none;
+
+    input {
+    .bg-grey-3;
+    }
+  }
+}

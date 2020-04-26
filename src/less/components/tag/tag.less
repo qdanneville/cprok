@@ -1,0 +1,30 @@
+.tag {
+    .relative;
+    .block;
+
+    .px-1;
+    .py-1;
+    .pr-4;
+
+    .bg-grey-3;
+    border-radius: 3px 0 0 3px;
+    .text-grey;
+    line-height: 15px;
+
+    .f6;
+    .font-black;
+  }
+  
+  .tag::after {
+    content: '';
+
+    .absolute;
+    .r-0;
+    .t-0;
+
+    .bg-white;
+    
+    border-bottom: 11px solid transparent;
+    border-left: 9px solid @grey-3;
+    border-top: 12px solid transparent;
+  }

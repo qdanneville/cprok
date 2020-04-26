@@ -2,10 +2,8 @@ import React from 'react';
 
 const Footer = (props) => {
 
-    console.log('footer props : ', props);
-
     return (
-        <footer className="Footer">
+        <footer className="bg-teal-5">
             <h3>footer</h3>
         </footer>
     )

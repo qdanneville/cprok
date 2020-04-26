@@ -1,10 +1,17 @@
 import React from 'react';
 
-const Notifications = (props) => {
+const Notifications = ({ notification }) => {
+
     return (
-        <div className="notifications">
-            {props.message}
-        </div>
+        <>
+            {
+                notification.message
+                &&
+                <div className={notification.type === "success" ? "notification success" : "notification error"}>
+                    {notification.message}
+                </div>
+            }
+        </>
     )
 }
 

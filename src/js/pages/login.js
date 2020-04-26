@@ -21,19 +21,24 @@ const Login = (props) => {
             .post('/users/authenticate',
                 { username, password })
             .then(response => {
+                //Local Storage
                 setUser(response.data.data.user);
-                console.log(response.data.data.token);
+                //In app
+                props.setUser(response.data.data.user)
+
                 addAuth(response.data.data.token);
-                history.replace({ pathname: "/" });
+
+                history.replace({ pathname: "/", state: { fromLogin: true } });
             })
             .catch(error => {
+                props.setNotification({ message: 'Username or password missmatch, try again :)', type: 'error' })
                 return setErrors('Username or password missmatch');
             })
 
     }
 
     return (
-        <>
+        <div className="common-container">
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
                 <div className="">
@@ -49,7 +54,7 @@ const Login = (props) => {
                 </div>
                 <button type="submit">login</button>
             </form>
-        </>
+        </div>
     )
 }
 

@@ -1,0 +1,32 @@
+//This is a pre-styled dropdown component, with a nice shadow, rounded borders and white background.
+//This is a bit of a hack so it's not made using only existing functional classes.
+//Sorry !
+
+.dropdown-shadowed {
+  .bg-white;
+  .block;
+
+  .dropdown-shadow-parent {
+    .br-4;
+    .br-top;
+  }
+
+  .dropdown-content {
+    .bg-white;
+    .absolute;
+    .br-4;
+    .br-bottom;
+    .shadow-1;
+
+    .w-full; //Warning : the parent element must be large enough.
+
+    margin-top: 1px; //Nice little separation
+  }
+
+  //When the dropdown is active (class triggered), trigger a shadow for the .dropdown-shadow elements
+  &.dropdown-active {
+    .dropdown-shadow-parent {
+      .shadow-1;
+    }
+  }
+}
