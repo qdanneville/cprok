@@ -1,32 +1,25 @@
 {
-  "name": "cprok",
+  "name": "skill-tree-front",
   "version": "1.0.0",
-  "description": "",
+  "description": "React - Axios - Local storage - Auth",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel ./src/index.html ./src/skill-details.html"
+    "dev": "parcel ./src/index.html"
   },
   "repository": {
     "type": "git",
     "url": "git+https://QuentinDanneville@github.com/qdanneville/cprok.git"
   },
-  "author": "",
+  "author": "Qdan",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/qdanneville/cprok/issues"
   },
   "homepage": "https://github.com/qdanneville/cprok#readme",
-  "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-transform-runtime": "^7.9.0",
-    "less": "^3.11.1",
-    "parcel-bundler": "^1.12.4"
-  },
   "dependencies": {
-    "axios": "^0.19.2",
+    "parcel-bundler": "^1.12.4",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2"
+    "react-dom": "^16.13.1"
   }
 }
