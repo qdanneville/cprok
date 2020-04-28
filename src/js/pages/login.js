@@ -25,6 +25,7 @@ const Login = (props) => {
             .then(response => {
                 addAuth(response.data.data.token)
                 setStorageUser(response.data.data.user)
+                props.setUser(response.data.data.user)
                 setMessage(response.data.message)
             })
             .catch(error => {

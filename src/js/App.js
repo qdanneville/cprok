@@ -11,22 +11,18 @@ import Header from './components/header'
 
 const App = () => {
 
-    const [appName, setAppName] = useState('Default app name')
-
-    const handleChangeHeaderTitle = (title) => {
-        setAppName(title)
-    }
+    const [user, setUser] = useState(null);
 
     return (
         <Router>
-            <Header title={appName} onChangeHeaderTitle={handleChangeHeaderTitle} />
+            <Header user={user} />
             <div>
                 <Switch>
                     <Route exact path="/">
                         <Home />
                     </Route>
                     <Route path="/login">
-                        <Login />
+                        <Login setUser={setUser} />
                     </Route>
                 </Switch>
             </div>
