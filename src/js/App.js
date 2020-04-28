@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -10,9 +10,16 @@ import Login from './pages/login'
 import Header from './components/header'
 
 const App = () => {
+
+    const [appName, setAppName] = useState('Default app name')
+
+    const handleChangeHeaderTitle = (title) => {
+        setAppName(title)
+    }
+
     return (
         <Router>
-            <Header name="header's name" isLoading={false} />
+            <Header title={appName} onChangeHeaderTitle={handleChangeHeaderTitle} />
             <div>
                 <Switch>
                     <Route exact path="/">
