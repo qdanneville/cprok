@@ -13,6 +13,7 @@ const SkillServices = {
     getAllSortByModule: (req, callback) => {
         ProjectQueries.getAllSortByModule(req,
             response => {
+                console.log(response);
                 return callback({ success: true, message: 'Skills successfully retrieved', data: response });
             },
             error => {
