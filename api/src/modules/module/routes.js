@@ -5,5 +5,6 @@ import ModuleController from "./controller"
 
 router.get('/', ModuleController.getAll);
 router.get('/skills/', ModuleController.getModulesWithSkills);
+router.get('/:id', ModuleController.getById);
 
 export default router

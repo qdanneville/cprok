@@ -3,6 +3,7 @@ import express from "express"
 import skillRoutes from "../modules/skill/routes"
 import userRoutes from "../modules/user/routes"
 import moduleRoutes from "../modules/module/routes"
+import levelRoutes from "../modules/level/routes"
 
 const Router = (app) => {
     var apiRoutes = express.Router();
@@ -18,6 +19,7 @@ const Router = (app) => {
     app.use('/api/skills', skillRoutes);
     app.use('/api/users', userRoutes);
     app.use('/api/modules', moduleRoutes);
+    app.use('/api/levels', levelRoutes);
 }
 
 export default Router

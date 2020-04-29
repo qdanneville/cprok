@@ -19,7 +19,7 @@ const Queries = {
     },
     getById: (id, successCallback, failureCallback) => {
 
-        let sqlQuery = `SELECT * FROM module WHERE ID=${id}`;
+        let sqlQuery = `SELECT * FROM modules WHERE ID=${id}`;
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {

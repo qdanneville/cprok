@@ -11,6 +11,15 @@ const ModuleServices = {
                 return callback({ success: false, message: error });
             });
     },
+    getById: (id, callback) => {
+        ModuleQueries.getById(id,
+            response => {
+                return callback({ success: true, message: 'Module successfully retrieved', data: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
+    },
     getModulesWithSkills: async (req, callback) => {
         ModuleQueries.getAll(req, response => {
 
@@ -21,7 +30,7 @@ const ModuleServices = {
             modules.forEach(module => {
                 SkillServices.getByModuleId(module.id, result => {
                     let moduleWithSkills = { ...module, skills: result.data }
-                    
+
                     modulesWithSkills.push(moduleWithSkills);
                     itemsProcessed++;
 
