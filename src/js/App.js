@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -7,31 +7,25 @@ import {
 
 import Home from './pages/home'
 import Login from './pages/login'
-import Header from './components/header'
-import { getStorageUser } from './utils/local-storage'
+import PrivateRoute from './components/private-route';
+
+import Layout from './components/layout';
 
 const App = () => {
-
     const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        let storageUser = getStorageUser()
-        if (storageUser) setUser(storageUser)
-    }, [])
 
     return (
         <Router>
-            <Header user={user} />
-            <div>
+            <Layout setUser={setUser} user={user}>
                 <Switch>
-                    <Route exact path="/">
-                        <Home />
-                    </Route>
                     <Route path="/login">
                         <Login setUser={setUser} />
                     </Route>
+                    <PrivateRoute user={user} path="/">
+                        <Home />
+                    </PrivateRoute>
                 </Switch>
-            </div>
+            </Layout>
         </Router>
     )
 }
