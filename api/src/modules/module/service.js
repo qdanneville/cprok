@@ -20,7 +20,7 @@ const ModuleServices = {
 
             modules.forEach(module => {
                 SkillServices.getByModuleId(module.id, result => {
-                    let moduleWithSkills = { ...module, skills: result }
+                    let moduleWithSkills = { ...module, skills: result.data }
                     
                     modulesWithSkills.push(moduleWithSkills);
                     itemsProcessed++;

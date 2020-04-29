@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 
+module.exports = function svgrParcelPlugin(bundler) {
+    // Parcel requires that the asset be passed in as a module path.
+    bundler.addAssetType('svg', require.resolve('../assets/svg'))
+}
+
 
 const MOUNT_NODE = document.getElementById('app');
 
-ReactDOM.render(<App/>, MOUNT_NODE)
+ReactDOM.render(<App />, MOUNT_NODE)
 
 {/* 
     <div id="app">
