@@ -40,6 +40,27 @@ const Queries = {
             }
         })
     },
+    updateLevel: (params, successCallback, failureCallback) => {
+
+        const { userId, skillId, levelId } = params;
+
+        let sqlQuery = `UPDATE padawan_has_skills SET id_level = ${levelId}
+                        WHERE padawan_has_skills.id_padawan = ${userId}
+                        AND padawan_has_skills.id_skill = ${skillId};`;
+
+        db.query(sqlQuery, (err, rows) => {
+            if (err) {
+                return failureCallback(err);
+            }
+            if (rows.length > 0) {
+                return successCallback(rows[0]);
+            } else {
+                return successCallback({});
+            }
+        })
+    },
 }
 
 export default Queries
+
+

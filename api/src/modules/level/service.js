@@ -19,6 +19,15 @@ const SkillServices = {
                 return callback({ success: false, message: error });
             });
     },
+    updateLevel: (params, callback) => {
+        LevelQueries.updateLevel(params,
+            response => {
+                return callback({ success: true, message: 'Level successfully updated', data: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
+    }
 }
 
 export default SkillServices;
