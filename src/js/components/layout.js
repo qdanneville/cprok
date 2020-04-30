@@ -1,31 +1,44 @@
-import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-
+import React, { useState } from 'react'
 import Header from '../components/header'
-import { getStorageUser, clearUser } from '../utils/local-storage'
+import Notification from './notification'
 
+import { clearUser } from '../utils/local-storage'
 
 import '../../less/style.less'
 
+const NotificationInitialState = {
+    message: '',
+    isVisible: false,
+    options: {},
+};
+
 const Layout = (props) => {
+    const [notification, setNotification] = useState(NotificationInitialState)
 
-    let history = useHistory();
+    const handleNotification = (notificationProps) => {
 
-    useEffect(() => {
-        let storageUser = getStorageUser();
-        if (storageUser) {
-            props.setUser(storageUser)
-            history.replace(history.location.state.form);
-        }
-    }, [])
+        setNotification(notificationProps)
+
+        setTimeout(() => {
+            setNotification(NotificationInitialState)
+        }, 4000)
+    }
 
     const signout = () => {
         props.setUser(null);
         clearUser();
+        handleNotification({
+            message: 'User correctly sign out',
+            isVisible: true,
+            options: {
+                type: 'success'
+            },
+        })
     }
 
     return (
         <div className="app-wrapper bg-grey">
+            <Notification notification={notification} />
             <Header user={props.user} signout={signout} />
             <main className="common-container">
                 {props.children}

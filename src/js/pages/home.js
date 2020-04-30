@@ -34,9 +34,6 @@ const Home = (props) => {
 
     const updateUserLevel = (skill, level) => {
 
-        console.log('skill :', skill)
-        console.log('level :', level)
-
         api
             .put(`/levels/update/?user=${props.user.user_id}&skill=${skill}&level=${level}`)
             .then(response => getModules())
