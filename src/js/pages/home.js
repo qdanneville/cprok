@@ -93,7 +93,7 @@ const Home = (props) => {
                                                                 </main>
                                                                 <hr className="bl-w-0 bt-w-0 br-w-0 bb-w-1 bs-solid bc-grey" />
                                                                 <footer className="flex justify-end">
-                                                                    <Link to={`/ skills / ${skill.id}`}>
+                                                                    <Link to={`/skills/${skill.id}`}>
                                                                         <CircleArrow />
                                                                     </Link>
                                                                 </footer>
