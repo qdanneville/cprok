@@ -19,14 +19,14 @@ const Home = (props) => {
         setIsLoading(true)
 
         api
-            .get('/modules/skills/')
+            .get(`/modules/skills/?user=${props.user.user_id}`)
             .then(response => {
                 setModules(response.data.data);
             })
             .finally(() => setIsLoading(false))
     }, [])
 
-    console.log('modules :', modules);
+    console.log(modules);
 
     return (
         <section>
@@ -60,12 +60,16 @@ const Home = (props) => {
                                                                 <hr className="bl-w-0 bt-w-0 br-w-0 bb-w-1 bs-solid bc-grey" />
                                                                 <main className="flex justify-between text-blue-dark">
                                                                     <div>
-                                                                        <span className="f6 font-bold">Niveau : 1</span>
-                                                                        <span className="block f6 font-normal">Imiter</span>
+                                                                        <div>
+                                                                            <span className="f6 font-bold">Niveau : {skill.level.id || 1}</span>
+                                                                            <span className="block f6 font-normal">{skill.level.name || 'Imiter'}</span>
+                                                                        </div>
                                                                     </div>
                                                                 </main>
                                                                 <footer className="flex justify-end">
-                                                                    <Link to="/"><CircleArrow /></Link>
+                                                                    <Link to={`/skills/${skill.id}`}>
+                                                                        <CircleArrow />
+                                                                    </Link>
                                                                 </footer>
                                                             </li>
                                                         )

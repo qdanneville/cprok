@@ -5,10 +5,12 @@ import {
     Route,
 } from "react-router-dom";
 
-import Home from './pages/home'
-import Login from './pages/login'
-import PrivateRoute from './components/private-route';
+import Home from './pages/home';
+import Login from './pages/login';
 
+import SkillDetails from './pages/skill-details'
+
+import PrivateRoute from './components/private-route';
 import Layout from './components/layout';
 
 const App = () => {
@@ -21,8 +23,11 @@ const App = () => {
                     <Route path="/login">
                         <Login setUser={setUser} />
                     </Route>
+                    <PrivateRoute user={user} path="/skills/:id">
+                        <SkillDetails />
+                    </PrivateRoute>
                     <PrivateRoute user={user} path="/">
-                        <Home />
+                        <Home user={user} />
                     </PrivateRoute>
                 </Switch>
             </Layout>
@@ -31,7 +36,3 @@ const App = () => {
 }
 
 export default App
-
-// function App() {
-    //Code goes here
-// }
