@@ -16,6 +16,11 @@ const Home = (props) => {
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
+        getModules();
+    }, [])
+
+    const getModules = () => {
+
         setIsLoading(true)
 
         api
@@ -24,9 +29,21 @@ const Home = (props) => {
                 setModules(response.data.data);
             })
             .finally(() => setIsLoading(false))
-    }, [])
+    }
 
-    console.log(modules);
+
+    const updateUserLevel = (skill, level) => {
+
+        console.log('skill :', skill)
+        console.log('level :', level)
+
+        api
+            .put(`/levels/update/?user=${props.user.user_id}&skill=${skill}&level=${level}`)
+            .then(response => getModules())
+            .catch(error => {
+                //TODO handle update level ERROR
+            })
+    }
 
     return (
         <section>
@@ -59,15 +76,24 @@ const Home = (props) => {
                                                                 </header>
                                                                 <hr className="bl-w-0 bt-w-0 br-w-0 bb-w-1 bs-solid bc-grey" />
                                                                 <main className="flex justify-between text-blue-dark">
-                                                                    <div>
-                                                                        <div>
+                                                                    <div className="flex flex-col justify-between w-full mb-2 mt-1">
+                                                                        <div className="text-align-center br-6 bg-grey py-4 px-6">
                                                                             <span className="f6 font-bold">Niveau : {skill.level.id || 1}</span>
-                                                                            <span className="block f6 font-normal">{skill.level.name || 'Imiter'}</span>
+                                                                            <span className="block f5 font-normal capitalize mt-1">{skill.level.name || 'Imiter'}</span>
+                                                                        </div>
+                                                                        <div className="f4 text-align-center mt-2">
+                                                                            <span className="f6 font-bold mb-2 block">Changer son niveau</span>
+                                                                            <ul className="flex justify-center">
+                                                                                <li><button className="mx-2 br-4 cursor-pointer" onClick={() => updateUserLevel(skill.id, 1)}>1</button></li>
+                                                                                <li><button className="mx-2 br-4 cursor-pointer" onClick={() => updateUserLevel(skill.id, 2)}>2</button></li>
+                                                                                <li><button className="mx-2 br-4 cursor-pointer" onClick={() => updateUserLevel(skill.id, 3)}>3</button></li>
+                                                                            </ul>
                                                                         </div>
                                                                     </div>
                                                                 </main>
+                                                                <hr className="bl-w-0 bt-w-0 br-w-0 bb-w-1 bs-solid bc-grey" />
                                                                 <footer className="flex justify-end">
-                                                                    <Link to={`/skills/${skill.id}`}>
+                                                                    <Link to={`/ skills / ${skill.id}`}>
                                                                         <CircleArrow />
                                                                     </Link>
                                                                 </footer>
