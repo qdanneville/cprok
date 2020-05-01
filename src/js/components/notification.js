@@ -1,4 +1,5 @@
-import React, { useState, useEffect, Component } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useStateValue } from '../store';
 
 const notificationOptions = {
     success: 'bg-green',
@@ -7,9 +8,31 @@ const notificationOptions = {
     default: 'bg-white'
 }
 
-const Notification = ({ notification }) => {
+const Notification = (props) => {
 
-    const { message, options, isVisible } = notification;
+    const [timeoutIsOn, setTimeoutIsOn] = useState(false);
+
+    const [{ notification }, dispatch] = useStateValue();
+    const { message, isVisible, options } = notification
+
+    useEffect(() => {
+        setTimeoutIsOn(true)
+
+        if (!timeoutIsOn) {
+            setTimeout(() => {
+                setTimeoutIsOn(false)
+                dispatch({
+                    type: 'setNotification',
+                    newNotification: {
+                        message: '',
+                        isVisible: false,
+                        options: {}
+                    }
+                })
+            }, 4000)
+        }
+
+    }, [message])
 
     if (!isVisible || message.length === 0) return (<></>)
 

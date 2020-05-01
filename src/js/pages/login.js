@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
+import { useStateValue } from '../store/'
 import { useHistory } from 'react-router-dom'
 
 import api, { addAuth } from '../utils/api'
 import { setStorageUser } from '../utils/local-storage'
 
 const Login = (props) => {
+    const [{ user }, dispatch] = useStateValue();
+
     let history = useHistory();
 
     const [username, setUsername] = useState('');
@@ -28,13 +31,25 @@ const Login = (props) => {
             .then(response => {
                 addAuth(response.data.data.token)
                 setStorageUser(response.data.data.user)
-                props.setUser(response.data.data.user)
-                history.replace({ pathname: "/", state: { fromLogin: true } });
+                dispatch({
+                    type: 'setUser',
+                    newUser: response.data.data.user
+                })
+                dispatch({
+                    type: 'setNotification',
+                    newNotification: {
+                        message: 'User correclty sign in',
+                        isVisible: true,
+                        options: {
+                            type: 'success'
+                        }
+                    }
+                })
+                return history.replace({ pathname: "/", state: { fromLogin: true } });
+                setIsLoading(false);
             })
             .catch(error => {
                 return setError(error.response.data.message);
-            })
-            .finally(() => {
                 setIsLoading(false);
             })
     }

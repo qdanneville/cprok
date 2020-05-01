@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Store from './store/app-reducer'
 
 import App from './App';
 
@@ -11,7 +12,7 @@ module.exports = function svgrParcelPlugin(bundler) {
 
 const MOUNT_NODE = document.getElementById('app');
 
-ReactDOM.render(<App />, MOUNT_NODE)
+ReactDOM.render(<Store><App /></Store>, MOUNT_NODE)
 
 {/* 
     <div id="app">

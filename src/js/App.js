@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useStateValue } from './store/'
 import {
     BrowserRouter as Router,
     Switch,
@@ -16,14 +17,18 @@ import Layout from './components/layout';
 import { getStorageUser, clearUser } from './utils/local-storage'
 
 const App = () => {
-    const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+
+    const [{ }, dispatch] = useStateValue();
 
     useEffect(() => {
         let storageUser = getStorageUser();
 
         if (storageUser)
-            setUser(storageUser)
+            dispatch({
+                type: 'setUser',
+                newUser: storageUser
+            })
 
         setIsLoading(false)
     }, [])
@@ -32,17 +37,17 @@ const App = () => {
 
     return (
         <Router>
-            <Layout setUser={setUser} user={user}>
+            <Layout>
                 <Switch>
                     <Route path="/login">
-                        <Login setUser={setUser} />
+                        <Login />
                     </Route>
-                    <PrivateRoute user={user} path="/skills/:id">
+                    <Route path="/skills/:id">
                         <SkillDetails />
-                    </PrivateRoute>
-                    <PrivateRoute user={user} path="/">
-                        <Home user={user} />
-                    </PrivateRoute>
+                    </Route>
+                    <Route exact path="/">
+                        <Home />
+                    </Route>
                 </Switch>
             </Layout>
         </Router>

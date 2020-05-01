@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useStateValue } from '../store/'
+
 import { Link } from 'react-router-dom'
 import api from '../utils/api'
 
@@ -11,6 +13,7 @@ let modulesColors = [
 ]
 
 const Home = (props) => {
+    const [{ user }, dispatch] = useStateValue();
 
     const [modules, setModules] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -24,7 +27,7 @@ const Home = (props) => {
         setIsLoading(true)
 
         api
-            .get(`/modules/skills/?user=${props.user.user_id}`)
+            .get(`/modules/skills/?user=${user ? user.user_id : ''}`)
             .then(response => {
                 setModules(response.data.data);
             })
@@ -35,7 +38,7 @@ const Home = (props) => {
     const updateUserLevel = (skill, level) => {
 
         api
-            .put(`/levels/update/?user=${props.user.user_id}&skill=${skill}&level=${level}`)
+            .put(`/levels/update/?user=${user.user_id}&skill=${skill}&level=${level}`)
             .then(response => getModules())
             .catch(error => {
                 //TODO handle update level ERROR
@@ -75,17 +78,23 @@ const Home = (props) => {
                                                                 <main className="flex justify-between text-blue-dark">
                                                                     <div className="flex flex-col justify-between w-full mb-2 mt-1">
                                                                         <div className="text-align-center br-6 bg-grey py-4 px-6">
-                                                                            <span className="f6 font-bold">Niveau : {skill.level.id || 1}</span>
-                                                                            <span className="block f5 font-normal capitalize mt-1">{skill.level.name || 'Imiter'}</span>
+                                                                            <span className="f6 font-bold">Niveau : {skill.level ? skill.level.id : 1}</span>
+                                                                            <span className="block f5 font-normal capitalize mt-1">{skill.level ? skill.level.name : 'Imiter'}</span>
                                                                         </div>
-                                                                        <div className="f4 text-align-center mt-2">
-                                                                            <span className="f6 font-bold mb-2 block">Changer son niveau</span>
-                                                                            <ul className="flex justify-center">
-                                                                                <li><button className="mx-2 br-4 cursor-pointer" onClick={() => updateUserLevel(skill.id, 1)}>1</button></li>
-                                                                                <li><button className="mx-2 br-4 cursor-pointer" onClick={() => updateUserLevel(skill.id, 2)}>2</button></li>
-                                                                                <li><button className="mx-2 br-4 cursor-pointer" onClick={() => updateUserLevel(skill.id, 3)}>3</button></li>
-                                                                            </ul>
-                                                                        </div>
+                                                                        {
+                                                                            skill.level
+                                                                                ? <div className="f4 text-align-center mt-2">
+                                                                                    <span className="f6 font-bold mb-2 block">Changer son niveau</span>
+                                                                                    <ul className="flex justify-center">
+                                                                                        <li><button className="mx-2 br-4 cursor-pointer" onClick={() => updateUserLevel(skill.id, 1)}>1</button></li>
+                                                                                        <li><button className="mx-2 br-4 cursor-pointer" onClick={() => updateUserLevel(skill.id, 2)}>2</button></li>
+                                                                                        <li><button className="mx-2 br-4 cursor-pointer" onClick={() => updateUserLevel(skill.id, 3)}>3</button></li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                                :
+                                                                                null
+                                                                        }
+
                                                                     </div>
                                                                 </main>
                                                                 <hr className="bl-w-0 bt-w-0 br-w-0 bb-w-1 bs-solid bc-grey" />
