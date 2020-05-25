@@ -1,10 +1,7 @@
 import React from 'react'
-import { useStateValue } from '../store/'
 import { Route, Redirect } from "react-router-dom";
 
 const PrivateRoute = ({ children, ...rest }) => {
-
-    const [{user}] = useStateValue();
 
     return (
         <Route

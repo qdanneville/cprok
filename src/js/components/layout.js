@@ -7,7 +7,7 @@ import '../../less/style.less'
 const Layout = (props) => {
     return (
         <div className="app-wrapper bg-grey">
-            <Notification />
+            {/* <Notification /> */}
             <Header />
             <main className="common-container">
                 {props.children}

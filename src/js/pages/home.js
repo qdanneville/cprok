@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useStateValue } from '../store/'
 
 import { Link } from 'react-router-dom'
 import api from '../utils/api'
@@ -13,13 +12,11 @@ let modulesColors = [
 ]
 
 const Home = (props) => {
-    const [{ user }, dispatch] = useStateValue();
-
     const [modules, setModules] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        getModules();
+        // getModules();
     }, [])
 
     const getModules = () => {

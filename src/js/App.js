@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useStateValue } from './store/'
+import React, { useEffect } from 'react';
+import { fetchUser } from './store/auth'
 import {
     BrowserRouter as Router,
     Switch,
     Route,
 } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import configureStore from './store/store'
 
 import Home from './pages/home';
 import Login from './pages/login';
@@ -14,26 +17,16 @@ import SkillDetails from './pages/skill-details'
 import PrivateRoute from './components/private-route';
 import Layout from './components/layout';
 
-import { getStorageUser, clearUser } from './utils/local-storage'
 
 const App = () => {
-    const [isLoading, setIsLoading] = useState(true);
 
-    const [{ }, dispatch] = useStateValue();
+    const dispatch = useDispatch();
+    const appInitialized = useSelector(state => state.auth.appInitialized);
 
     useEffect(() => {
-        let storageUser = getStorageUser();
-
-        if (storageUser)
-            dispatch({
-                type: 'setUser',
-                newUser: storageUser
-            })
-
-        setIsLoading(false)
+        // dispatch(fetchUser());
+        dispatch({ type: 'SET_TREE_NAME', payload: 'CPROK.' })
     }, [])
-
-    if (isLoading) return <span><i className="loader"></i></span>
 
     return (
         <Router>

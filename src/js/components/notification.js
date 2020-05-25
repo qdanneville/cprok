@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useStateValue } from '../store';
 
 const notificationOptions = {
     success: 'bg-green',
@@ -11,8 +10,6 @@ const notificationOptions = {
 const Notification = (props) => {
 
     const [timeoutIsOn, setTimeoutIsOn] = useState(false);
-
-    const [{ notification }, dispatch] = useStateValue();
     const { message, isVisible, options } = notification
 
     useEffect(() => {

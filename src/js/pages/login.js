@@ -1,57 +1,28 @@
 import React, { useState } from 'react'
-import { useStateValue } from '../store/'
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
-import api, { addAuth } from '../utils/api'
-import { setStorageUser } from '../utils/local-storage'
+import { doLogin } from '../store/auth'
+import { useDispatch, useSelector } from 'react-redux';
+import { useAuth } from '../components/auth-route';
 
 const Login = (props) => {
-    const [{ user }, dispatch] = useStateValue();
 
-    let history = useHistory();
+    const dispatch = useDispatch();
+    const isLoading = useSelector(state => state.auth.isLoading);
+    const isLogged = useAuth();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    if (isLogged) return <Redirect to="/" />
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        setError(null);
-        setIsLoading(true);
-
-        const body = {
-            username,
-            password,
-        }
-
-        api
-            .post('/users/authenticate', body)
-            .then(response => {
-                addAuth(response.data.data.token)
-                setStorageUser(response.data.data.user)
-                dispatch({
-                    type: 'setUser',
-                    newUser: response.data.data.user
-                })
-                dispatch({
-                    type: 'setNotification',
-                    newNotification: {
-                        message: 'User correclty sign in',
-                        isVisible: true,
-                        options: {
-                            type: 'success'
-                        }
-                    }
-                })
-                return history.replace({ pathname: "/", state: { fromLogin: true } });
-                setIsLoading(false);
-            })
-            .catch(error => {
-                return setError(error.response.data.message);
-                setIsLoading(false);
-            })
+        dispatch(doLogin(username, password)).catch(err => {
+            setError(err);
+        })
     }
 
     return (

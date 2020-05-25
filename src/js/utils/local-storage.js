@@ -2,6 +2,10 @@ export const setStorageUser = (user) => {
     return window.localStorage.setItem('user', JSON.stringify(user))
 }
 
+export const setStorageToken = (token) => {
+    return window.localStorage.setItem('token', JSON.stringify(token))
+}
+
 // const user = {
 //     username:'jean',
 //     password:'paul',

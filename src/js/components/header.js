@@ -1,13 +1,15 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { useStateValue } from '../store/'
 import { clearUser } from '../utils/local-storage'
 
 import { Link } from 'react-router-dom';
 
+const user = null
+
 const Header = (props) => {
     const history = useHistory();
-    const [{ user }, dispatch] = useStateValue();
+    const treeName = useSelector(state => state.tree.name);
 
     const signout = () => {
         clearUser();
@@ -33,7 +35,7 @@ const Header = (props) => {
             <nav className="common-container py-3">
                 <ul className="flex justify-between">
                     <li>
-                        <Link className="font-black f1 text-blue-dark" to="/">CPROK.</Link>
+                        <Link className="font-black f1 text-blue-dark" to="/">{treeName}</Link>
                     </li>
                     {
                         user ?
