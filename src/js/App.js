@@ -1,50 +1,19 @@
-import React, { useEffect } from 'react';
-import { fetchUser } from './store/auth'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-} from "react-router-dom";
+import React from 'react'
+import { useDispatch } from 'react-redux'
 
-import { useDispatch, useSelector } from "react-redux";
-import configureStore from './store/store'
-
-import Home from './pages/home';
-import Login from './pages/login';
-
-import SkillDetails from './pages/skill-details'
-
-import PrivateRoute from './components/private-route';
-import Layout from './components/layout';
-
+import Header from './components/header'
 
 const App = () => {
 
     const dispatch = useDispatch();
-    const appInitialized = useSelector(state => state.auth.appInitialized);
-
-    useEffect(() => {
-        // dispatch(fetchUser());
-        dispatch({ type: 'SET_TREE_NAME', payload: 'CPROK.' })
-    }, [])
 
     return (
-        <Router>
-            <Layout>
-                <Switch>
-                    <Route path="/login">
-                        <Login />
-                    </Route>
-                    <Route path="/skills/:id">
-                        <SkillDetails />
-                    </Route>
-                    <Route exact path="/">
-                        <Home />
-                    </Route>
-                </Switch>
-            </Layout>
-        </Router>
+        <>
+            <Header />
+            <button onClick={() => dispatch({ type: 'SET_TREE_NAME', payload: 'CPROK.' })}> set CPROK</button>
+            <button onClick={() => dispatch({ type: 'SET_TREE_NAME', payload: 'Lol default name.' })}> set Lol default name</button>
+        </>
     )
 }
 
-export default App
+export default App;
