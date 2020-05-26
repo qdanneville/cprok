@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import {fetchModules} from '../store/tree'
 
 import api from '../utils/api'
 
@@ -9,15 +10,7 @@ const Home = () => {
     const modulesCollection = useSelector(state => state.tree.modules.collection)
 
     useEffect(() => {
-
-        dispatch({ type: 'FETCH_MODULES' });
-
-        api
-            .get('/modules/')
-            .then(response => {
-                let result = response.data.data
-                dispatch({ type: 'SET_MODULES', payload: result });
-            })
+        dispatch(fetchModules())
     }, [])
 
     if (moduleIsLoading) return <span>Modules are loading</span>

@@ -9,6 +9,7 @@
 // }
 
 import { combineReducers } from "redux";
+import api from '../utils/api'
 
 const name = (state = null, action) => {
     switch (action.type) {
@@ -24,6 +25,19 @@ const name = (state = null, action) => {
 const modulesInitialState = {
     collection: null,
     isLoading: false
+}
+
+export const fetchModules = () => {
+    return dispatch => {
+        dispatch({ type: 'FETCH_MODULES' });
+
+        api
+            .get('/modules/')
+            .then(response => {
+                let result = response.data.data
+                dispatch({ type: 'SET_MODULES', payload: result });
+            })
+    }
 }
 
 const modules = (state = modulesInitialState, action) => {
