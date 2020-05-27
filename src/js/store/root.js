@@ -4,7 +4,8 @@ import auth from "./auth";
 import tree from "./tree";
 
 const createRootReducer = combineReducers({
-    tree
+    tree,
+    auth
 });
 
 // {

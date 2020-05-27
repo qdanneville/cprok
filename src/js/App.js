@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import Header from './components/header'
 import Home from './pages/home'
+import Login from './pages/login'
 
 const App = () => {
 
@@ -12,8 +13,9 @@ const App = () => {
         <>
             <Header />
             <Home />
-            {/* <button onClick={() => dispatch({ type: 'SET_TREE_NAME', payload: 'CPROK.' })}> set CPROK</button>
-            <button onClick={() => dispatch({ type: 'CLEAR_TREE_NAME' })}> Reset tree name</button> */}
+            <Login />
+            <button onClick={() => dispatch({ type: 'SET_TREE_NAME', payload: 'CPROK.' })}> set CPROK</button>
+            <button onClick={() => dispatch({ type: 'CLEAR_TREE_NAME' })}> Reset tree name</button>
         </>
     )
 }
