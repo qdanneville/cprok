@@ -1,6 +1,10 @@
 import UserServices from "./service"
 
 const UserController = {
+    getUserWithToken: (req, res) => {
+        UserServices.getUserWithToken(req)
+            .then(result => res.status(result.status).send(result.payload))
+    },
     getAll: (req, res) => {
         UserServices.getAll(req, result => {
             //Will be executed once the service is finished
