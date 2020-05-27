@@ -1,5 +1,6 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchUser } from './store/auth'
 
 import Header from './components/header'
 import Home from './pages/home'
@@ -8,6 +9,13 @@ import Login from './pages/login'
 const App = () => {
 
     const dispatch = useDispatch();
+    const appInitialized = useSelector(state => state.auth.appInitialized);
+
+    useEffect(() => {
+        dispatch(fetchUser());
+    }, [])
+
+    if (!appInitialized) return (<span>Loading</span>)
 
     return (
         <>

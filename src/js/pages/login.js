@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { doLogin } from '../store/auth'
+import { Redirect } from 'react-router-dom';
 
 const Login = () => {
     const dispatch = useDispatch();

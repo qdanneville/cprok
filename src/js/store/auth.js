@@ -3,22 +3,37 @@
 //         token:null,
 //         user:null,
 //         isLoading: false
+//         appInitialized:false
 //     }
 // }
 
 import { combineReducers } from "redux";
 import api, { addAuth } from '../utils/api'
-import { setStorageToken } from '../utils/local-storage'
+import { setStorageToken, getStorageToken } from '../utils/local-storage'
+
+export const fetchUser = () => {
+    return dispatch => {
+        dispatch({ type: "FETCH_USER" })
+
+        const token = getStorageToken();
+
+        addAuth(token);
+
+        api
+            .get('users/me')
+            .then(response => {
+                let user = response.data.data.user
+
+                if (user) dispatch({ type: "SET_AUTH_USER", payload: user })
+                if (token) dispatch({ type: "SET_AUTH_TOKEN", payload: token })
+            })
+            .finally(() => {
+                dispatch({ type: "APP_INITIALIZED" })
+            })
+    }
+}
 
 export const doLogin = (username, password) => {
-    // On lance le fetch user - DOING LOGIN
-    //Call d'api ->  DOING LOGIN
-    // Reponse ok -> user 
-    // user -> SET_AUTH_USER 
-    // token -> SET_AUTH_TOKEN
-    // LOGIN FINI
-    // LOGIN FAILED
-
     return dispatch => {
         dispatch({ type: "DOING_LOGIN" })
 
@@ -72,6 +87,8 @@ const isLoading = (state = null, action) => {
             return true;
         case "FETCH_STORAGE":
             return true;
+        case "FETCH_USER":
+            return true;
         case "LOGIN_FAILED":
         case "SET_AUTH_USER":
         case "SET_AUTH_TOKEN":
@@ -82,11 +99,23 @@ const isLoading = (state = null, action) => {
     }
 };
 
+const appInitialized = (state = false, action) => {
+    switch (action.type) {
+        case "FETCH_USER":
+            return state;
+        case "APP_INITIALIZED":
+            return true;
+        default:
+            return state;
+    }
+};
+
 
 const authReducer = combineReducers({
     token,
     user,
     isLoading,
+    appInitialized
 });
 
 export default authReducer;
