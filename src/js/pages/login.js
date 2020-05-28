@@ -15,7 +15,6 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
 
-    if (isLogged) return <Redirect to="/" />
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -24,6 +23,9 @@ const Login = (props) => {
             setError(err);
         })
     }
+
+
+    if (isLogged) return <Redirect to="/" />
 
     return (
         <div className="flex flex-col justify-center">
