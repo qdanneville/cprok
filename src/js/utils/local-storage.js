@@ -1,29 +1,13 @@
-export const setStorageUser = (user) => {
-    return window.localStorage.setItem('user', JSON.stringify(user))
-}
-
 export const setStorageToken = (token) => {
     return window.localStorage.setItem('token', JSON.stringify(token))
 }
 
-// const user = {
-//     username:'jean',
-//     password:'paul',
-// }
-
-// JSON.stringify(user)
-
-// --> const user = {
-//     'username':'jean',
-//     'password':'paul',
-//     }
-
-export const getStorageUser = () => {
-    return JSON.parse(window.localStorage.getItem('user'))
+export const getStorageToken = () => {
+    return JSON.parse(window.localStorage.getItem('token'))
 }
 
-export const clearUser = () => {
-    window.localStorage.removeItem('user');
+export const clearToken = () => {
+    window.localStorage.removeItem('');
 }
 
 // Si je suis un autre fichier

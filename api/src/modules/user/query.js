@@ -32,6 +32,19 @@ const Queries = {
             }
         })
     },
+    getUserInformationsByUserId: (id) => {
+        let sqlQuery = `SELECT *
+        from padawans, login_profile
+        WHERE padawans.id = login_profile.user_id
+        AND login_profile.id = "${id}"`;
+
+        return new Promise((resolve, reject) => {
+            db.query(sqlQuery, (err, rows) => {
+                if (err) reject(err)
+                resolve(rows[0])
+            })
+        })
+    },
     getByUsername: (username) => {
         let sqlQuery = `SELECT *
         from padawans, login_profile

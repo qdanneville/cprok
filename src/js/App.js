@@ -24,7 +24,7 @@ const App = () => {
     const appInitialized = useSelector(state => state.auth.appInitialized);
 
     useEffect(() => {
-        // dispatch(fetchUser());
+        dispatch(fetchUser());
         dispatch({ type: 'SET_TREE_NAME', payload: 'CPROK.' })
     }, [])
 

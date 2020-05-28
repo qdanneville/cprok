@@ -1,6 +1,10 @@
 import UserServices from "./service"
 
 const UserController = {
+    getUserWithToken: (req, res) => {
+        UserServices.getUserWithToken(req)
+            .then(result => res.status(result.status).send(result.payload))
+    },
     getAll: (req, res) => {
         UserServices.getAll(req, result => {
             //Will be executed once the service is finished
@@ -15,7 +19,10 @@ const UserController = {
     },
     authenticate: (req, res) => {
         UserServices.authenticate(req.body)
-            .then(result => res.status(result.status).send(result.payload))
+            .then(result => {
+                // res.cookie('token', result.payload.data.token, { maxAge: 900000, httpOnly: true, secure: false })
+                res.status(result.status).send(result.payload)
+            })
     },
     register: (req, res) => {
         UserServices.register(req.body)

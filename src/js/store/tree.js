@@ -1,52 +1,61 @@
-/*
-{
-    tree: {
-        tree: {
-            name:'Default tree name'
-        }
-        skills: []
-        modules: []
-        isLoading: false
-    }
-}
-*/
+// {
+//     name:null,
+//     skills: [],
+//     modules : {
+//          collection:[],
+//          isLoading:false
+//     },
+//     isLoading: false
+// }
 
 import { combineReducers } from "redux";
+import api from '../utils/api'
 
-const initialState = {
-    name: 'Default tree name'
-}
-
-
-const tree = (state = initialState, action) => {
+const name = (state = null, action) => {
     switch (action.type) {
-        case 'SET_TREE_NAME':
-            return {...state, name : action.payload}
-        case 'SET_SKILLS':
+        case "SET_TREE_NAME":
             return action.payload
-        case 'SET_MODULES':
-            return action.payload
+        case "CLEAR_TREE_NAME":
+            return null
         default:
             return state
     }
 }
 
-const isLoading = (state = null, action) => {
+const modulesInitialState = {
+    collection: null,
+    isLoading: false
+}
+
+export const fetchModules = () => {
+    return dispatch => {
+        dispatch({ type: 'FETCH_MODULES' });
+
+        api
+            .get('/modules/')
+            .then(response => {
+                let result = response.data.data
+                dispatch({ type: 'SET_MODULES', payload: result });
+            })
+    }
+}
+
+const modules = (state = modulesInitialState, action) => {
     switch (action.type) {
-        case 'FETCH_SKILLS':
-        case 'FETCH_MODULES':
-            return true
-        case 'SET_SKILLS':
-        case 'SET_MODULES':
-            return false
+        case "FETCH_MODULES":
+            return { ...state, isLoading: true }
+        case "SET_MODULES":
+            return { ...state, collection: action.payload, isLoading: false }
+        case "CLEAR_MODULES":
+            return modulesInitialState
         default:
             return state
     }
 }
 
 const treeReducer = combineReducers({
-    tree,
-    isLoading,
+    modules,
+    name,
 });
 
 export default treeReducer;
