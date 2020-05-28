@@ -17,6 +17,8 @@ export const fetchUser = () => {
 
         const token = getStorageToken();
 
+        if (!token) return dispatch({ type: "APP_INITIALIZED" })
+
         addAuth(token);
 
         api

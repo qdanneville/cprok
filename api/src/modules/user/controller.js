@@ -19,7 +19,10 @@ const UserController = {
     },
     authenticate: (req, res) => {
         UserServices.authenticate(req.body)
-            .then(result => res.status(result.status).send(result.payload))
+            .then(result => {
+                res.cookie('token', result.payload.data.token, { maxAge: 900000, httpOnly: true, secure: false })
+                res.status(result.status).send(result.payload)
+            })
     },
     register: (req, res) => {
         UserServices.register(req.body)
