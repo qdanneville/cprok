@@ -16,7 +16,7 @@ const Home = (props) => {
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        // getModules();
+        getModules();
     }, [])
 
     const getModules = () => {
