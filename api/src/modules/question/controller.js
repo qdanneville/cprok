@@ -40,6 +40,16 @@ const QuestionController = {
             result.success ? res.status(200).send(result) : res.status(404).send(result)
         })
     },
+    getManyRandomQuestions: (req, res) => {
+        QuestionsServices.getManyRandomQuestions(req.query.nb_questions, result => {
+            result.success ? res.status(200).send(result) : res.status(404).send(result)
+        })
+    },
+    getQuestionsByCategory: (req, res) => {
+        QuestionsServices.getQuestionsByCategory(req.params.id, req.query.nb_questions, result => {
+            result.success ? res.status(200).send(result) : res.status(404).send(result)
+        })
+    },
 }
 
 export default QuestionController

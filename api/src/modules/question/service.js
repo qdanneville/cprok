@@ -54,6 +54,24 @@ const QuestionServices = {
             error => {
                 return callback({ success: false, message: error });
             });
+    },
+    getManyRandomQuestions: (nb_questions, callback) => {
+        QuestionQueries.getManyRandomQuestions(nb_questions,
+            response => {
+                return callback({ success: true, message: 'Questions successfully retrieved', data: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
+    },
+    getQuestionsByCategory: (category_id, nb_questions, callback) => {
+        QuestionQueries.getQuestionsByCategory(category_id, nb_questions,
+            response => {
+                return callback({ success: true, message: 'Questions successfully retrieved', data: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
     }
 }
 

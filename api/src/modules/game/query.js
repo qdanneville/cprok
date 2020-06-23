@@ -84,7 +84,6 @@ const Queries = {
                     response => {
                         Queries.addQuestion({ gameId: rows.insertId, questionId: currentQuestion },
                             response => {
-                                console.log(response);
                                 return successCallback({});
                             },
                             fail => {
