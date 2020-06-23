@@ -1,9 +1,9 @@
 import express from "express"
 
-import skillRoutes from "../modules/skill/routes"
+import questionRoutes from "../modules/question/routes"
 import userRoutes from "../modules/user/routes"
-import moduleRoutes from "../modules/module/routes"
-import levelRoutes from "../modules/level/routes"
+import gameRoutes from "../modules/game/routes"
+// import levelRoutes from "../modules/level/routes"
 
 const Router = (app) => {
     var apiRoutes = express.Router();
@@ -16,10 +16,10 @@ const Router = (app) => {
     //User router
     app.use('/api/', apiRoutes);
 
-    app.use('/api/skills', skillRoutes);
+    app.use('/api/questions', questionRoutes);
     app.use('/api/users', userRoutes);
-    app.use('/api/modules', moduleRoutes);
-    app.use('/api/levels', levelRoutes);
+    app.use('/api/games', gameRoutes);
+    // app.use('/api/levels', levelRoutes);
 }
 
 export default Router

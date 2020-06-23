@@ -2,7 +2,7 @@
     "development": {
       "username": "root",
       "password": "root",
-      "database": "skill-tree",
+      "database": "quizz",
       "host": "localhost",
       "dialect": "mysql",
       "socketPath": "/Applications/MAMP/tmp/mysql/mysql.sock"
@@ -10,7 +10,7 @@
     "production": {
       "username": "root",
       "password": "root",
-      "database": "skill_tree",
+      "database": "quizz",
       "host": "localhost",
       "dialect": "mysql"
     }

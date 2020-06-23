@@ -1,10 +1,9 @@
-import ModuleQueries from "./query"
-import SkillServices from "../skill/service"
-import LevelServices from "../level/service"
+import GameQueries from "./query"
+import QuestionQueries from "../question/query"
 
-const ModuleServices = {
+const GameServices = {
     getAll: (req, callback) => {
-        ModuleQueries.getAll(req,
+        GameQueries.getAll(req,
             response => {
                 return callback({ success: true, message: 'Modules successfully retrieved', data: response });
             },
@@ -13,7 +12,7 @@ const ModuleServices = {
             });
     },
     getById: (id, callback) => {
-        ModuleQueries.getById(id,
+        GameQueries.getById(id,
             response => {
                 return callback({ success: true, message: 'Module successfully retrieved', data: response });
             },
@@ -21,8 +20,22 @@ const ModuleServices = {
                 return callback({ success: false, message: error });
             });
     },
+    create: (userId, callback) => {
+
+        QuestionQueries.getOneRandomQuestion(success => {
+            GameQueries.create({ userId, currentQuestion: success.id },
+                response => {
+                    return callback({ success: true, message: 'Game successfully created', data: response });
+                },
+                error => {
+                    return callback({ success: false, message: error });
+                });
+        }, err => {
+            return callback({ success: false, message: err });
+        })
+    },
     getModulesWithSkills: async (req, callback) => {
-        ModuleQueries.getAll(req, response => {
+        GameQueries.getAll(req, response => {
 
             const modules = response;
             let modulesWithSkills = []
@@ -68,4 +81,4 @@ const ModuleServices = {
     },
 }
 
-export default ModuleServices;
+export default GameServices;

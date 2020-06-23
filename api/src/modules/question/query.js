@@ -4,7 +4,7 @@ import db from "../../setup/database";
 const Queries = {
     getAll: (param, successCallback, failureCallback) => {
 
-        let sqlQuery = "SELECT * FROM `modules`";
+        let sqlQuery = "SELECT * FROM `questions`";
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -13,13 +13,13 @@ const Queries = {
             if (rows.length > 0) {
                 return successCallback(rows);
             } else {
-                return successCallback("No module.");
+                return successCallback("No questions.");
             }
         })
     },
     getById: (id, successCallback, failureCallback) => {
 
-        let sqlQuery = `SELECT * FROM modules WHERE ID=${id}`;
+        let sqlQuery = `SELECT * FROM questions WHERE ID=${id}`;
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -28,25 +28,24 @@ const Queries = {
             if (rows.length > 0) {
                 return successCallback(rows[0]);
             } else {
-                return successCallback("No matching module");
+                return successCallback("No matching questions");
             }
         })
     },
-    getModuleWithSkills: (param, successCallback, failureCallback) => {
-        let sqlQuery = `SELECT modules.id as module_id, modules.name as module_name, skills.name as skill_name
-        from skills, modules 
-        WHERE skills.module_id = modules.id 
-        GROUP BY modules.id, modules.name, skills.name 
-        ORDER BY modules.id`;
+    getOneRandomQuestion: (successCallback, failureCallback) => {
+        let sqlQuery = `SELECT * FROM questions
+        ORDER BY RAND()
+        LIMIT 1;`;
 
         db.query(sqlQuery, (err, rows) => {
+
             if (err) {
                 return failureCallback(err);
             }
             if (rows.length > 0) {
-                return successCallback(rows);
+                return successCallback(rows[0]);
             } else {
-                return successCallback("Can't retrieve skills sorted by module");
+                return successCallback("No questions available");
             }
         })
     }
