@@ -72,6 +72,15 @@ const QuestionServices = {
             error => {
                 return callback({ success: false, message: error });
             });
+    },
+    getQuestionAnswers: (question_id, callback) => {
+        QuestionQueries.getQuestionAnswers(question_id,
+            response => {
+                return callback({ success: true, message: 'Answers successfully retrieved', data: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
     }
 }
 
