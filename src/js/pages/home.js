@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchMods } from '../store/quizz'
 import { initSession } from '../store/session'
@@ -18,6 +18,7 @@ const Home = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const mods = useSelector(state => state.quizz.mods);
+    const user = useSelector(state => state.auth.user);
 
     let { collection: modsCollection, isLoading: modsAreLoading } = mods;
 
@@ -27,7 +28,7 @@ const Home = (props) => {
 
     const start_game = (mode) => {
         history.push("/quizz/");
-        dispatch(initSession(mode))
+        dispatch(initSession(mode, user.player_id))
     }
 
     return (
@@ -46,7 +47,7 @@ const Home = (props) => {
                         {
                             modsCollection.map((item, i) => {
                                 return (
-                                    <li className="mx-2 flex-grow-1 w-33-per text-align-center flex justify-center flex-col items-center" key={item.id}>
+                                    <li className="mx-6 flex-grow-1 w-33-per text-align-center flex justify-center flex-col items-center" key={item.id}>
                                         <div onClick={() => start_game(item.id)} className="bg-blue-light py-4 px-4 br-10 w-full flex justify-center flex-col items-center py-10 cursor-pointer shadow-1 hover:bg-white hover:text-blue-dark transition hover:scale-11">
                                             <i className="fill-white stroke-blue-dark w-20 block mb-2">{modsIllustration[i]}</i>
                                             <span className="font-bold f4 uppercase">{item.label}</span>

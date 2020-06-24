@@ -17,7 +17,7 @@ const ModuleController = {
         })
     },
     create: (req, res) => {
-        GameServices.create(req.query.user, result => {
+        GameServices.create(req.query.user, req.query.mode,req.query.category_id, req.query.nb_questions, result => {
             result.success ? res.status(200).send(result) : res.status(404).send(result)
         })
     },

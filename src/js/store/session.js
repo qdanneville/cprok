@@ -11,10 +11,21 @@
 import { combineReducers } from "redux";
 import api from '../utils/api'
 
-export const initSession = (mode) => {
+export const initSession = (mode, userId, categoryId, nbQuestions) => {
     return dispatch => {
         dispatch({ type: "INIT_SESSION" })
         dispatch({ type: "SET_CURRENT_MODE", payload: mode })
+        dispatch({ type: "FETCH_QUESTIONS", payload: mode })
+
+        api
+            .post(`/games/create/?user=${userId}&mode=${mode}&category_id=2&nb_questions=2`)
+            .then(response => {
+                let questions = response.data.data;
+
+                if (questions) {
+                    dispatch({ type: "SET_QUESTIONS", payload: questions })
+                }
+            })
     }
 }
 
