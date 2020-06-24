@@ -7,7 +7,7 @@ export const getStorageToken = () => {
 }
 
 export const clearToken = () => {
-    window.localStorage.removeItem('');
+    window.localStorage.removeItem('token');
 }
 
 // Si je suis un autre fichier

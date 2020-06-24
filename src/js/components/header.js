@@ -1,7 +1,7 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { clearUser } from '../utils/local-storage'
+import { clearToken } from '../utils/local-storage'
 
 import { Link } from 'react-router-dom';
 
@@ -9,24 +9,21 @@ const user = null
 
 const Header = (props) => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const treeName = useSelector(state => state.tree.name);
+    const user = useSelector(state => state.auth.user)
 
     const signout = () => {
-        clearUser();
+        clearToken();
+
         dispatch({
-            type: 'setUser',
-            newUser: null
+            type: 'CLEAR_AUTH_USER'
         })
+
         dispatch({
-            type: 'setNotification',
-            newNotification: {
-                message: 'User correclty sign out',
-                isVisible: true,
-                options: {
-                    type: 'success'
-                }
-            }
+            type: 'CLEAR_AUTH_TOKEN'
         })
+
         history.replace({ pathname: "/login" })
     }
 

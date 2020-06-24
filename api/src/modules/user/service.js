@@ -51,15 +51,15 @@ const UserServices = {
     },
     register: async (body) => {
 
-        let { firstname, lastname, password, username, email } = body;
+        let { name, password, username, } = body;
 
-        if (typeof firstname !== "string" || typeof lastname !== "string" || typeof password !== "string" || typeof username !== "string" || typeof email !== "string") {
+        if (typeof name !== "string" || typeof password !== "string" || typeof username !== "string") {
             return { status: 400, payload: { success: false, message: "All fields are required and must be a string type" } }
         }
 
         return brcrypt.genSalt()
             .then(salt => brcrypt.hash(password, salt))
-            .then(hashedPassword => UserQueries.register({ firstname, lastname, username, hashedPassword, email }))
+            .then(hashedPassword => UserQueries.register({ name, username, hashedPassword }))
             .then(user => ({ status: 201, payload: { success: true, message: 'User successfully registered' } }))
             .catch(err => ({ status: 400, payload: { success: false, message: err } }))
     },

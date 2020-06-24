@@ -4,7 +4,7 @@ import db from "../../setup/database";
 const Queries = {
     getAll: (param, successCallback, failureCallback) => {
 
-        let sqlQuery = "SELECT * FROM `padawans`";
+        let sqlQuery = "SELECT * FROM `players`";
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -19,7 +19,7 @@ const Queries = {
     },
     getById: (id, successCallback, failureCallback) => {
 
-        let sqlQuery = `SELECT * FROM padawans WHERE ID=${id}`;
+        let sqlQuery = `SELECT * FROM players WHERE ID=${id}`;
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -34,9 +34,9 @@ const Queries = {
     },
     getUserInformationsByUserId: (id) => {
         let sqlQuery = `SELECT *
-        from padawans, login_profile
-        WHERE padawans.id = login_profile.user_id
-        AND login_profile.id = "${id}"`;
+        from players, profiles
+        WHERE players.id = profiles.player_id
+        AND profiles.id = "${id}"`;
 
         return new Promise((resolve, reject) => {
             db.query(sqlQuery, (err, rows) => {
@@ -47,9 +47,9 @@ const Queries = {
     },
     getByUsername: (username) => {
         let sqlQuery = `SELECT *
-        from padawans, login_profile
-        WHERE padawans.id = login_profile.user_id
-        AND login_profile.username = "${username}"`;
+        from players, profiles
+        WHERE players.id = profiles.player_id
+        AND profiles.username = "${username}"`;
 
         return new Promise((resolve, reject) => {
             db.query(sqlQuery, (err, rows) => {
@@ -60,24 +60,26 @@ const Queries = {
     },
     register: (user) => {
         return new Promise((resolve, reject) => {
-            let sqlQuery = `INSERT INTO padawans (id, firstname, lastname, email) VALUES (NULL, "${user.firstname}", "${user.lastname}","${user.email}");`;
-            let getUserIdQuery = `SELECT id FROM padawans
-                            WHERE email = "${user.email}"`
+            let sqlQuery = `INSERT INTO players (id, name, game_played) VALUES (NULL, '${user.name}', '0');`
+            let getUserIdQuery = `SELECT id FROM players
+                            WHERE name = "${user.name}"`
 
-            db.query(sqlQuery, (err, res) => {
-                if (err) reject(err)
+            db.query(sqlQuery, (err1, res) => {
+                if (err1) reject(err1)
 
-                db.query(getUserIdQuery, (err, res) => {
-                    if (err) reject(err)
+                db.query(getUserIdQuery, (err2, userRes) => {
+                    if (err2) reject(err2)
 
-                    let addLoginQuery = `INSERT INTO login_profile (id, username, password, user_id) VALUES (NULL, "${user.username}", "${user.hashedPassword}","${res[0].id}");`;
 
-                    db.query(addLoginQuery, (err, res) => {
-                        if (err) reject(err)
+                    let addLoginQuery = `INSERT INTO profiles (id, username, password, player_id, role) VALUES (NULL, "${user.username}", "${user.hashedPassword}","${userRes[0].id}", "${user.role ? user.role : 'user'}");`;
+
+                    db.query(addLoginQuery, (err3, res) => {
+                        if (err3) reject(err3)
+
+                        console.log(res);
 
                         resolve(res);
                     })
-
                 })
             })
         })
