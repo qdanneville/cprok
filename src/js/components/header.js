@@ -32,7 +32,7 @@ const Header = (props) => {
             <nav className="common-container py-3">
                 <ul className="flex justify-between">
                     <li>
-                        <Link className="font-black f1 text-white" to="/">{quizzName}</Link>
+                        <Link className="font-black f1 text-dark" to="/">{quizzName}</Link>
                     </li>
                     {
                         user ?
@@ -40,7 +40,7 @@ const Header = (props) => {
                                 <li className="flex flex-col align-start">
                                     <div className="flex justify-center items-center">
                                         <i className="w-13 h-13 br-50 bg-yellow shadow-1"></i>
-                                        <div className="flex flex-col ml-2 text-white">
+                                        <div className="flex flex-col ml-2 text-dark">
                                             <span className="font-bold f4">{user.name}</span>
                                             <a className="underline f6 mt-1 cursor-pointer" onClick={signout}>Sign out</a>
                                         </div>
