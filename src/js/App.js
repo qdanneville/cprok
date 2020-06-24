@@ -10,8 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Home from './pages/home';
 import Login from './pages/login';
-
-import SkillDetails from './pages/skill-details'
+import Session from './pages/session';
 
 import { AuthRoute } from './components/auth-route';
 import Layout from './components/layout';
@@ -32,8 +31,8 @@ const App = () => {
             <Layout>
                 <Switch>
                     <Route path="/login" component={Login} />
-                    <Route path="/skills/:id" component={SkillDetails} />
                     <AuthRoute exact path="/" component={Home} />
+                    <Route path="/quizz/" component={Session} />
                 </Switch>
             </Layout>
         </Router>

@@ -76,8 +76,6 @@ const Queries = {
                     db.query(addLoginQuery, (err3, res) => {
                         if (err3) reject(err3)
 
-                        console.log(res);
-
                         resolve(res);
                     })
                 })

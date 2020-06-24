@@ -68,7 +68,6 @@ const Queries = {
     },
     getQuestionsByCategory: (category_id, nb_questions = 5, successCallback, failureCallback) => {
 
-        console.log(category_id);
         let sqlQuery = `SELECT questions.id 
                         from questions, questions_has_catagories 
                         WHERE questions_has_catagories.category_id = ${category_id}

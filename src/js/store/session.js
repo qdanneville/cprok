@@ -20,11 +20,40 @@ export const initSession = (mode, userId, categoryId, nbQuestions) => {
         api
             .post(`/games/create/?user=${userId}&mode=${mode}&category_id=2&nb_questions=2`)
             .then(response => {
-                let questions = response.data.data;
+                const questions = response.data.data.questions;
+                const sessionId = response.data.data.session.id;
+                const current_question = Array.isArray(questions) ? questions[0] : questions;
 
                 if (questions) {
                     dispatch({ type: "SET_QUESTIONS", payload: questions })
+                    dispatch({ type: "SET_SESSION_ID", payload: sessionId })
+                    dispatch(startSession(current_question.id))
                 }
+            })
+    }
+}
+
+export const startSession = (questionId) => {
+    return dispatch => {
+        dispatch({ type: "STARTING_SESSION" })
+        dispatch(fetchQuestion(questionId))
+    }
+}
+
+export const fetchQuestion = (questionId) => {
+    return dispatch => {
+        dispatch({ type: "FETCH_CURRENT_QUESTION" })
+
+        api
+            .get(`/questions/${questionId}`)
+            .then(response => {
+                const question = response.data.data;
+                api
+                    .get(`/questions/${questionId}/answers`)
+                    .then(response => {
+                        const answers = response.data.data;
+                        dispatch({ type: "SET_CURRENT_QUESTION", payload: { question, answers } })
+                    })
             })
     }
 }
@@ -45,12 +74,8 @@ const questions = (state = questionsInitialState, action) => {
     }
 }
 
-const current_quetionInitialState = {
-    question: null,
-    isLoading: false
-}
 
-const current_quetion = (state = current_quetionInitialState, action) => {
+const current_question = (state = null, action) => {
     switch (action.type) {
         case "FETCH_CURRENT_QUESTION":
             return { ...state, isLoading: true }
@@ -62,27 +87,27 @@ const current_quetion = (state = current_quetionInitialState, action) => {
 }
 
 
-const current_mode = (state = null, action) => {
-    switch (action.type) {
-        case "SET_CURRENT_MODE":
-            return action.payload
-        default:
-            return state
-    }
+const sessionInitialState = {
+    id: null,
+    steps: 0,
+    score: 0,
+    mode: null
 }
 
 
-const step = (state = 0, action) => {
+const session = (state = sessionInitialState, action) => {
     switch (action.type) {
-        default:
-            return state
-    }
-}
-
-const score = (state = 0, action) => {
-    switch (action.type) {
+        case "SET_SESSION_ID":
+            return { ...state, id: action.payload }
+        case "NEXT_SESSION_STEP":
+            return { ...state, steps: state.steps + 1 }
+        case "SET_SESSION_SCORE":
+            return { ...state, score: state.score + action.payload }
         case "UPDATE_SCORE":
             return state = state + action.payload
+        case "SET_CURRENT_MODE":
+            return { ...state, mode: action.payload }
+
         default:
             return state
     }
@@ -100,12 +125,10 @@ const isLoading = (state = false, action) => {
 }
 
 const quizzReducer = combineReducers({
+    session,
     questions,
-    current_quetion,
-    current_mode,
-    step,
+    current_question,
     isLoading,
-    score
 });
 
 export default quizzReducer;

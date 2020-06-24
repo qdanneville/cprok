@@ -20,13 +20,13 @@ const GameServices = {
                 return callback({ success: false, message: error });
             });
     },
-    create: (userId, mode, category_id = 1,nb_questions, callback) => {
+    create: (userId, mode, category_id = 1, nb_questions, callback) => {
 
         if (mode == 1) {
             QuestionQueries.getManyRandomQuestions(nb_questions, success => {
                 GameQueries.create({ userId, currentQuestion: success[0].id },
                     response => {
-                        return callback({ success: true, message: 'Game successfully created', data: success });
+                        return callback({ success: true, message: 'Game successfully created', data: { questions: success, session: response } });
                     },
                     error => {
                         return callback({ success: false, message: error });
@@ -35,10 +35,10 @@ const GameServices = {
                 return callback({ success: false, message: err });
             })
         } else if (mode == 2) {
-            QuestionQueries.getQuestionsByCategory(category_id,nb_questions, success => {
+            QuestionQueries.getQuestionsByCategory(category_id, nb_questions, success => {
                 GameQueries.create({ userId, currentQuestion: success[0].id },
                     response => {
-                        return callback({ success: true, message: 'Game successfully created', data: success });
+                        return callback({ success: true, message: 'Game successfully created', data: { questions: success, session: response } });
                     },
                     error => {
                         return callback({ success: false, message: error });
@@ -50,7 +50,7 @@ const GameServices = {
             QuestionQueries.getOneRandomQuestion(success => {
                 GameQueries.create({ userId, currentQuestion: success.id },
                     response => {
-                        return callback({ success: true, message: 'Game successfully created', data: success });
+                        return callback({ success: true, message: 'Game successfully created', data: { questions: success, session: response } });
                     },
                     error => {
                         return callback({ success: false, message: error });

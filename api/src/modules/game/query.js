@@ -1,4 +1,5 @@
 import db from "../../setup/database";
+import UserQueries from "../user/query"
 
 // Notre query s'occupe d'effectuer la requête sur la base de donneés et de renvoyer au service les datas
 const Queries = {
@@ -70,29 +71,61 @@ const Queries = {
 
         const { userId, currentQuestion } = params;
 
-        let sqlQuery = `
+        console.log(UserQueries.getById);
+
+        UserQueries.getById(userId, success => {
+            if (success[0]) {
+                let gamePlayed = success[0].game_played + 1;
+
+                console.log(gamePlayed);
+
+                let sqlQuery = `
         INSERT INTO games (id, player_id, current_question, score, played_at) 
-        VALUES (NULL, ${userId}, ${currentQuestion}, '0', CURRENT_TIMESTAMP);`
+        VALUES (NULL, ${userId}, ${currentQuestion}, 0, CURRENT_TIMESTAMP);`
 
-        db.query(sqlQuery, (err, rows) => {
-            if (err) {
-                return failureCallback(err);
-            }
 
-            if (rows.insertId) {
-                Queries.getById(rows.insertId,
-                    response => {
-                        Queries.addQuestion({ gameId: rows.insertId, questionId: currentQuestion },
+                db.query(sqlQuery, (err, rows) => {
+                    if (err) {
+                        return failureCallback(err);
+                    }
+
+                    let updtatePlayer = `UPDATE players SET game_played=${gamePlayed}, current_game= ${rows.insertId} WHERE id = ${userId}`
+                    console.log(rows.insertId, userId)
+
+                    console.log('session info :', rows.insertId);
+
+                    if (rows.insertId) {
+
+                        console.log('lol');
+
+                        // console.log('update player req :', updtate);
+                        console.log('azdqsdqsdqsd');
+
+                        db.query(updtatePlayer, (err, updateRes) => {
+                            if (err) {
+                                return failureCallback(err);
+                            }
+                            if (updateRes) {
+                                console.log(updateRes)
+                            }
+                        })
+
+                        Queries.getById(rows.insertId,
                             response => {
-                                return successCallback({});
+                                Queries.addQuestion({ gameId: rows.insertId, questionId: currentQuestion },
+                                    response => {
+                                        return successCallback({ id: rows.insertId });
+                                    },
+                                    fail => {
+                                        return failureCallback(fail)
+                                    })
                             },
-                            fail => {
-                                return failureCallback(fail)
-                            })
-                    },
-                    error => {
-                        return failureCallback(error);
-                    });
+                            error => {
+                                return failureCallback(error);
+                            });
+
+                    }
+                })
             }
         })
     }
