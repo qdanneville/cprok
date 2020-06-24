@@ -10,7 +10,7 @@ const user = null
 const Header = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const treeName = useSelector(state => state.tree.name);
+    const quizzName = useSelector(state => state.quizz.name);
     const user = useSelector(state => state.auth.user)
 
     const signout = () => {
@@ -32,7 +32,7 @@ const Header = (props) => {
             <nav className="common-container py-3">
                 <ul className="flex justify-between">
                     <li>
-                        <Link className="font-black f1 text-blue-dark" to="/">{treeName}</Link>
+                        <Link className="font-black f1 text-white" to="/">{quizzName}</Link>
                     </li>
                     {
                         user ?
@@ -40,9 +40,8 @@ const Header = (props) => {
                                 <li className="flex flex-col align-start">
                                     <div className="flex justify-center items-center">
                                         <i className="w-13 h-13 br-50 bg-yellow shadow-1"></i>
-                                        <div className="flex flex-col ml-2 text-blue-dark">
-                                            <span className="font-bold f4">{user.firstname}</span>
-                                            <span className="f4">{user.lastname}</span>
+                                        <div className="flex flex-col ml-2 text-white">
+                                            <span className="font-bold f4">{user.name}</span>
                                             <a className="underline f6 mt-1 cursor-pointer" onClick={signout}>Sign out</a>
                                         </div>
                                     </div>

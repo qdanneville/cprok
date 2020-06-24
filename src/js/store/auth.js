@@ -49,7 +49,10 @@ export const doLogin = (username, password) => {
                     setStorageToken(result.token);
                     dispatch({ type: "SET_AUTH_TOKEN", payload: result.token })
                 }
-                if (result && result.user) dispatch({ type: "SET_AUTH_USER", payload: result.user })
+                if (result && result.user) {
+                    dispatch({ type: "SET_AUTH_USER", payload: result.user })
+                    dispatch({ type: "APP_INITIALIZED" })
+                }
             })
             .catch(error => {
                 dispatch({ type: "LOGIN_FAILED" })

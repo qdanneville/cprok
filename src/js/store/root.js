@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import auth from "./auth";
-import tree from "./tree";
+import quizz from "./quizz";
+import session from "./session";
 
 const createRootReducer = combineReducers({
   auth,
-  tree
+  quizz,
+  session
 });
 
 export default createRootReducer;

@@ -24,7 +24,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(fetchUser());
-        dispatch({ type: 'SET_TREE_NAME', payload: 'CPROK.' })
+        dispatch({ type: 'SET_TREE_NAME', payload: 'CPROK quizz.' })
     }, [])
 
     return (

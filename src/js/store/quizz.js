@@ -27,35 +27,35 @@ const modulesInitialState = {
     isLoading: false
 }
 
-export const fetchModules = () => {
+export const fetchMods = () => {
     return dispatch => {
-        dispatch({ type: 'FETCH_MODULES' });
+        dispatch({ type: 'FETCH_MODS' });
 
         api
-            .get('/modules/')
+            .get('/mods/')
             .then(response => {
                 let result = response.data.data
-                dispatch({ type: 'SET_MODULES', payload: result });
+                dispatch({ type: 'SET_MODS', payload: result });
             })
     }
 }
 
-const modules = (state = modulesInitialState, action) => {
+const mods = (state = modulesInitialState, action) => {
     switch (action.type) {
-        case "FETCH_MODULES":
+        case "FETCH_MODS":
             return { ...state, isLoading: true }
-        case "SET_MODULES":
+        case "SET_MODS":
             return { ...state, collection: action.payload, isLoading: false }
-        case "CLEAR_MODULES":
+        case "CLEAR_MODS":
             return modulesInitialState
         default:
             return state
     }
 }
 
-const treeReducer = combineReducers({
-    modules,
+const quizzReducer = combineReducers({
+    mods,
     name,
 });
 
-export default treeReducer;
+export default quizzReducer;

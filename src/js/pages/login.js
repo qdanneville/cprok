@@ -28,7 +28,7 @@ const Login = (props) => {
     if (isLogged) return <Redirect to="/" />
 
     return (
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center my-auto">
             {
                 isLoading
                     ? <i className="loader"></i>

@@ -4,6 +4,7 @@ import questionRoutes from "../modules/question/routes"
 import userRoutes from "../modules/user/routes"
 import gameRoutes from "../modules/game/routes"
 import categoryRoutes from "../modules/category/routes"
+import modRoutes from "../modules/mod/routes"
 
 const Router = (app) => {
     var apiRoutes = express.Router();
@@ -20,6 +21,7 @@ const Router = (app) => {
     app.use('/api/users', userRoutes);
     app.use('/api/games', gameRoutes);
     app.use('/api/categories', categoryRoutes);
+    app.use('/api/mods/', modRoutes);
 }
 
 export default Router
