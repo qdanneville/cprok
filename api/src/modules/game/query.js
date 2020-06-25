@@ -1,11 +1,27 @@
 import db from "../../setup/database";
 import UserQueries from "../user/query"
+import QuestionQueries from '../question/query'
 
 // Notre query s'occupe d'effectuer la requête sur la base de donneés et de renvoyer au service les datas
 const Queries = {
     getAll: (param, successCallback, failureCallback) => {
 
         let sqlQuery = "SELECT * FROM `games`";
+
+        db.query(sqlQuery, (err, rows) => {
+            if (err) {
+                return failureCallback(err);
+            }
+            if (rows.length > 0) {
+                return successCallback(rows);
+            } else {
+                return successCallback("No games.");
+            }
+        })
+    },
+    getPlayerGames: (playerId, successCallback, failureCallback) => {
+
+        let sqlQuery = `SELECT * from games WHERE games.player_id = ${playerId}`;
 
         db.query(sqlQuery, (err, rows) => {
             if (err) {
@@ -27,9 +43,33 @@ const Queries = {
                 return failureCallback(err);
             }
             if (rows.length > 0) {
-                return successCallback(rows[0]);
+
+                QuestionQueries.getGameQuestions(rows[0].id,
+                    success => {
+                        return successCallback({ session: rows[0], questions: success });
+                    },
+                    error => {
+                        return failureCallback(error);
+                    })
             } else {
                 return successCallback("No matching game");
+            }
+        })
+    },
+    update: (params, successCallback, failureCallback) => {
+
+        const { id, score, steps, currentQuestion } = params
+
+        let sqlQuery = `UPDATE games SET current_question=${currentQuestion}, score=${score}, steps=${steps} WHERE id = ${id}`
+
+
+        db.query(sqlQuery, (err, rows) => {
+            if (err) {
+                return failureCallback(err);
+            }
+            if (rows) {
+                console.log(rows);
+                return successCallback({});
             }
         })
     },
@@ -69,7 +109,7 @@ const Queries = {
     },
     create: (params, successCallback, failureCallback) => {
 
-        const { userId, currentQuestion, mode } = params;
+        const { userId, currentQuestion, mode, questions } = params;
 
         UserQueries.getById(userId, success => {
             if (success[0]) {
@@ -95,19 +135,30 @@ const Queries = {
                                 return failureCallback(err);
                             }
                             if (updateRes) {
-                                console.log(updateRes)
                             }
                         })
 
                         Queries.getById(rows.insertId,
                             response => {
-                                Queries.addQuestion({ gameId: rows.insertId, questionId: currentQuestion },
-                                    response => {
-                                        return successCallback({ id: rows.insertId });
-                                    },
-                                    fail => {
-                                        return failureCallback(fail)
-                                    })
+
+                                let nbIterations = 0;
+                                questions.forEach(question => {
+                                    Queries.addQuestion({ gameId: rows.insertId, questionId: question.id },
+                                        response => {
+
+                                            nbIterations++
+
+                                            if (nbIterations >= questions.length) {
+                                                return successCallback({ id: rows.insertId, mode: mode });
+                                            }
+
+                                        },
+                                        fail => {
+                                            return failureCallback(fail)
+                                        })
+                                });
+
+
                             },
                             error => {
                                 return failureCallback(error);

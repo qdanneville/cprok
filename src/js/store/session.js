@@ -18,15 +18,16 @@ export const initSession = (mode, userId, categoryId, nbQuestions) => {
         dispatch({ type: "FETCH_QUESTIONS", payload: mode })
 
         api
-            .post(`/games/create/?user=${userId}&mode=${mode}&category_id=2&nb_questions=2`)
+            .post(`/games/create/?user=${userId}&mode=${mode}&category_id=2`)
             .then(response => {
                 const questions = response.data.data.questions;
-                const sessionId = response.data.data.session.id;
+                const session = response.data.data.session;
                 const current_question = Array.isArray(questions) ? questions[0] : questions;
 
                 if (questions) {
                     dispatch({ type: "SET_QUESTIONS", payload: questions })
-                    dispatch({ type: "SET_SESSION_ID", payload: sessionId })
+                    dispatch({ type: "SET_SESSION_ID", payload: session.id })
+                    dispatch({ type: "SET_SESSION_MODE", payload: session.mode })
                     dispatch(startSession(current_question.id))
                 }
             })
@@ -40,6 +41,20 @@ export const startSession = (questionId) => {
     }
 }
 
+export const nextSessionStep = (session, currentQuestionId, success) => {
+    return dispatch => {
+
+        const { steps, score, id } = session
+
+        api
+            .put(`/games/update/?id=${id}&steps=${steps + 1}&score=${success ? score + 1 : score}&current_question=${currentQuestionId.id || currentQuestionId.questions_id}`)
+            .then(response => {
+                return dispatch(fetchSession(id))
+            })
+
+    }
+}
+
 export const fetchSession = (sessionId) => {
     return dispatch => {
         dispatch({ type: "FETCH_CURRENT_SESSION" })
@@ -48,10 +63,15 @@ export const fetchSession = (sessionId) => {
             .get(`/games/${sessionId}`)
             .then(response => {
 
-                let session = response.data.data;
+                let session = response.data.data.session;
+                let questions = response.data.data.questions;
 
-                dispatch({ type: "SET_QUESTIONS", payload: session.current_question })
+                // dispatch({ type: "SET_QUESTIONS", payload: session.current_question })
                 dispatch({ type: "SET_SESSION_ID", payload: sessionId })
+                dispatch({ type: "SET_SESSION_MODE", payload: session.mode })
+                dispatch({ type: "SET_SESSION_SCORE", payload: session.score })
+                dispatch({ type: "SET_SESSION_STEPS", payload: session.steps })
+                dispatch({ type: "SET_QUESTIONS", payload: questions })
                 dispatch(startSession(session.current_question))
             })
     }
@@ -98,6 +118,8 @@ const current_question = (state = null, action) => {
             return { ...state, isLoading: true }
         case "SET_CURRENT_QUESTION":
             return { ...state, question: action.payload, isLoading: false }
+        case "INIT_SESSION":
+            return null
         default:
             return state
     }
@@ -116,15 +138,18 @@ const session = (state = sessionInitialState, action) => {
     switch (action.type) {
         case "SET_SESSION_ID":
             return { ...state, id: action.payload }
-        case "NEXT_SESSION_STEP":
-            return { ...state, steps: state.steps + 1 }
+        case "SET_SESSION_STEPS":
+            return { ...state, steps: action.payload }
         case "SET_SESSION_SCORE":
-            return { ...state, score: state.score + action.payload }
+            return { ...state, score: action.payload }
+        case "SET_SESSION_MODE":
+            return { ...state, mode: action.payload }
         case "UPDATE_SCORE":
             return state = state + action.payload
         case "SET_CURRENT_MODE":
             return { ...state, mode: action.payload }
-
+        case "INIT_SESSION":
+            return sessionInitialState
         default:
             return state
     }

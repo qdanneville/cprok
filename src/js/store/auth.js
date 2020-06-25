@@ -29,7 +29,7 @@ export const fetchUser = () => {
 
                 if (user) {
                     dispatch({ type: "SET_AUTH_USER", payload: user })
-                    dispatch(fetchSession(user.current_game))
+                    if (user.current_game) dispatch(fetchSession(user.current_game))
                 }
                 if (token) dispatch({ type: "SET_AUTH_TOKEN", payload: token })
             })
