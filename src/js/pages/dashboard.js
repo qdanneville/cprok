@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import api from '../utils/api'
 
-import Arcade from '../../assets/svg/arcade.svg'
+import Arcade from '../../assets/svg/playing-cards.svg'
+import Session from './result'
 
 const Dashboard = (props) => {
 
@@ -11,6 +12,8 @@ const Dashboard = (props) => {
     const session = useSelector(state => state.session.session)
     const user = useSelector(state => state.auth.user)
     const [sessions, setSessions] = useState(null);
+    const [sessionQuestions, setSessionQuestions] = useState(null);
+    const [currentSession, setCurrentSession] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -24,6 +27,15 @@ const Dashboard = (props) => {
                 setIsLoading(false);
             })
     }, [])
+
+    const fetchSessionQuestions = (sessionId) => {
+        api
+            .get(`/questions/game/${sessionId}`)
+            .then(response => {
+                setCurrentSession(sessionId)
+                setSessionQuestions(response.data.data);
+            })
+    }
 
     return (
         <section className="w-full mt-10 flex flex-col text-dark">
@@ -39,13 +51,32 @@ const Dashboard = (props) => {
                     :
                     (<ul className="flex flex-col">
                         {
-                            sessions.map(session => (
-                                <li key={session.id} className="bg-white shadow-2 br-10 my-2 flex justify-center items-center">
-                                    <span className="bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid py-2 px-2 flex-grow-1">Id :<strong className="font-bold">{session.id}</strong></span>
-                                    <span className="bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid py-2 px-2 flex-grow-1">Score :<strong className="font-bold">{session.score}</strong></span>
-                                    <span className="py-2 px-2 flex-grow-1">Nombre de questions répondus : <strong className="font-bold">{session.steps}</strong></span>
-                                </li>
-                            ))
+                            sessions && sessions.map(session => {
+
+                                let date = new Date(session.played_at);
+
+                                return (
+                                    <div className="my-2" key={session.id}>
+                                        <li className="bg-white shadow-2 flex justify-center items-center">
+                                            <span className="bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid py-2 px-2 flex-grow-1 text-align-center">Id :<strong className="font-bold">{session.id}</strong></span>
+                                            <span className="bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid py-2 px-2 flex-grow-1 text-align-center">Score :<strong className="font-bold">{session.score}</strong></span>
+                                            <span className="py-2 px-2 flex-grow-1 bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid text-align-center">Nombre de questions répondus : <strong className="font-bold">{session.steps}</strong></span>
+                                            <span className="py-2 px-2 flex-grow-1 text-align-center bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid">Joué le : <strong className="font-bold">{date.toLocaleDateString('fr-FR')}</strong></span>
+                                            <span onClick={() => fetchSessionQuestions(session.id)} className="py-2 px-2 flex-grow-1 text-align-center cursor-pointer"><Arcade className="w-6 fill-dark" /></span>
+                                        </li>
+
+                                        {sessionQuestions && currentSession === session.id &&
+                                            <div className="bg-dark px-2 py-4 text-white">
+                                                <span className="f4 uppercase font-bold mb-4">Questions :</span>
+                                                <hr className="bw-1 bc-dark w-33-per bs-solid br-10"></hr>
+                                                <ul className="flex flex-col">
+                                                    {sessionQuestions.map((question, i) => <span key={question.id} className="my-1">{`${i+1} - ${question.label}`}</span>)}
+                                                </ul>
+                                            </div>
+                                        }
+                                    </div>
+                                )
+                            })
                         }
                     </ul>)
             }

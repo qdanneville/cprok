@@ -119,6 +119,21 @@ const Queries = {
             }
         })
     },
+    getGameQuestionsDetails: (gameId, successCallback, failureCallback) => {
+        let sqlQuery = `select * FROM game_has_questions, questions WHERE game_has_questions.game_id = ${gameId} and game_has_questions.questions_id = questions.id`;
+
+        db.query(sqlQuery, (err, rows) => {
+
+            if (err) {
+                return failureCallback(err);
+            }
+            if (rows.length > 0) {
+                return successCallback(rows);
+            } else {
+                return successCallback("No questions available");
+            }
+        })
+    },
 
 }
 

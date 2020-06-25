@@ -37,6 +37,15 @@ const QuestionServices = {
                 return callback({ success: false, message: error });
             });
     },
+    getGameQuestionsDetails: (gameId, callback) => {
+        QuestionQueries.getGameQuestionsDetails(gameId,
+            response => {
+                return callback({ success: true, message: 'Questions successfully retrieved', data: response });
+            },
+            error => {
+                return callback({ success: false, message: error });
+            });
+    },
     getByModuleId: (callback) => {
         QuestionQueries.getByModuleId(moduleId,
             response => {
