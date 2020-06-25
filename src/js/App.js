@@ -26,6 +26,8 @@ const App = () => {
         dispatch({ type: 'SET_TREE_NAME', payload: 'CPROK quizz.' })
     }, [])
 
+    if (!appInitialized) return <i className="loader"></i>
+
     return (
         <Router>
             <Layout>

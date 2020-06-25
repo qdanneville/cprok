@@ -5,6 +5,7 @@ const Session = (props) => {
 
     const dispatch = useDispatch();
     const currentQuestion = useSelector(state => state.session.current_question)
+    const user = useSelector(state => state.auth.user)
 
     if (!currentQuestion || currentQuestion.isLoading) return <i className="loader"></i>
 
@@ -20,7 +21,8 @@ const Session = (props) => {
                 <div className="">
                     {
                         Array.isArray(answers) ? answers.map(answer => {
-                            return (<span>
+                            return (
+                            <span key={answer.id}>
                                 {answer.label}
                             </span>)
                         }) : <span>{answers}</span>

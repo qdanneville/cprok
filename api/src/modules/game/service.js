@@ -24,7 +24,7 @@ const GameServices = {
 
         if (mode == 1) {
             QuestionQueries.getManyRandomQuestions(nb_questions, success => {
-                GameQueries.create({ userId, currentQuestion: success[0].id },
+                GameQueries.create({ userId, currentQuestion: success[0].id, mode },
                     response => {
                         return callback({ success: true, message: 'Game successfully created', data: { questions: success, session: response } });
                     },
@@ -36,7 +36,7 @@ const GameServices = {
             })
         } else if (mode == 2) {
             QuestionQueries.getQuestionsByCategory(category_id, nb_questions, success => {
-                GameQueries.create({ userId, currentQuestion: success[0].id },
+                GameQueries.create({ userId, currentQuestion: success[0].id, mode },
                     response => {
                         return callback({ success: true, message: 'Game successfully created', data: { questions: success, session: response } });
                     },
@@ -48,7 +48,7 @@ const GameServices = {
             })
         } else {
             QuestionQueries.getOneRandomQuestion(success => {
-                GameQueries.create({ userId, currentQuestion: success.id },
+                GameQueries.create({ userId, currentQuestion: success.id, mode },
                     response => {
                         return callback({ success: true, message: 'Game successfully created', data: { questions: success, session: response } });
                     },

@@ -69,19 +69,15 @@ const Queries = {
     },
     create: (params, successCallback, failureCallback) => {
 
-        const { userId, currentQuestion } = params;
-
-        console.log(UserQueries.getById);
+        const { userId, currentQuestion, mode } = params;
 
         UserQueries.getById(userId, success => {
             if (success[0]) {
                 let gamePlayed = success[0].game_played + 1;
 
-                console.log(gamePlayed);
-
                 let sqlQuery = `
-        INSERT INTO games (id, player_id, current_question, score, played_at) 
-        VALUES (NULL, ${userId}, ${currentQuestion}, 0, CURRENT_TIMESTAMP);`
+                    INSERT INTO games (id, player_id, current_question, score, played_at, steps, mode) 
+                    VALUES (NULL, ${userId}, ${currentQuestion}, 0, CURRENT_TIMESTAMP, 0, ${mode});`
 
 
                 db.query(sqlQuery, (err, rows) => {
@@ -90,17 +86,10 @@ const Queries = {
                     }
 
                     let updtatePlayer = `UPDATE players SET game_played=${gamePlayed}, current_game= ${rows.insertId} WHERE id = ${userId}`
-                    console.log(rows.insertId, userId)
-
-                    console.log('session info :', rows.insertId);
 
                     if (rows.insertId) {
 
-                        console.log('lol');
-
                         // console.log('update player req :', updtate);
-                        console.log('azdqsdqsdqsd');
-
                         db.query(updtatePlayer, (err, updateRes) => {
                             if (err) {
                                 return failureCallback(err);

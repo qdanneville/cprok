@@ -40,6 +40,23 @@ export const startSession = (questionId) => {
     }
 }
 
+export const fetchSession = (sessionId) => {
+    return dispatch => {
+        dispatch({ type: "FETCH_CURRENT_SESSION" })
+
+        api
+            .get(`/games/${sessionId}`)
+            .then(response => {
+
+                let session = response.data.data;
+
+                dispatch({ type: "SET_QUESTIONS", payload: session.current_question })
+                dispatch({ type: "SET_SESSION_ID", payload: sessionId })
+                dispatch(startSession(session.current_question))
+            })
+    }
+}
+
 export const fetchQuestion = (questionId) => {
     return dispatch => {
         dispatch({ type: "FETCH_CURRENT_QUESTION" })
