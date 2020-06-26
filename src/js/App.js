@@ -28,7 +28,7 @@ const App = () => {
         dispatch({ type: 'SET_TREE_NAME', payload: 'CPROK quizz.' })
     }, [])
 
-    if (!appInitialized) return <i className="loader"></i>
+    if (!appInitialized) return <div className="w-full my-auto text-align-center"><i className="loader"></i></div>
 
     return (
         <Router>

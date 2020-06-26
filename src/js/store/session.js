@@ -18,7 +18,7 @@ export const initSession = (mode, userId, categoryId, nbQuestions) => {
         dispatch({ type: "FETCH_QUESTIONS", payload: mode })
 
         api
-            .post(`/games/create/?user=${userId}&mode=${mode}&category_id=2`)
+            .post(`/games/create/?user=${userId}&mode=${mode}&category_id=${categoryId}`)
             .then(response => {
                 const questions = response.data.data.questions;
                 const session = response.data.data.session;
