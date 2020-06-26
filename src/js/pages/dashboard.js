@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import api from '../utils/api'
 
 import Arcade from '../../assets/svg/playing-cards.svg'
+import Empty from '../../assets/svg/empty.svg'
 import Session from './result'
 
 const Dashboard = (props) => {
@@ -50,8 +51,9 @@ const Dashboard = (props) => {
                     ? <div className="w-full my-auto text-align-center"><i className="loader"></i></div>
                     :
                     (<ul className="flex flex-col">
+                        {!Array.isArray(sessions) && <span className="f4 font-bold mb-4 text-align-center bloc flex justify-center items-center"><Empty className="w-10 fill-dark stroke-white mr-4"/>Aucune session jouée pour l'instant</span>}
                         {
-                            sessions && sessions.map(session => {
+                            Array.isArray(sessions) && sessions.map(session => {
 
                                 let date = new Date(session.played_at);
 
@@ -60,7 +62,7 @@ const Dashboard = (props) => {
                                         <li className="bg-white shadow-2 flex justify-center items-center">
                                             <span className="bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid py-2 px-2 flex-grow-1 text-align-center">Id :<strong className="font-bold">{session.id}</strong></span>
                                             <span className="bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid py-2 px-2 flex-grow-1 text-align-center">Score :<strong className="font-bold">{session.score}</strong></span>
-                                            <span className="py-2 px-2 flex-grow-1 bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid text-align-center">Nombre de questions répondus : <strong className="font-bold">{session.steps}</strong></span>
+                                            <span className="py-2 px-2 flex-grow-1 bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid text-align-center">Nombre de questions répondus : <strong className="font-bold">{session.steps+1}</strong></span>
                                             <span className="py-2 px-2 flex-grow-1 text-align-center bt-w-0 bb-w-0 br-w-2 bl-w-0 bc-grey bs-solid">Joué le : <strong className="font-bold">{date.toLocaleDateString('fr-FR')}</strong></span>
                                             <span onClick={() => fetchSessionQuestions(session.id)} className="py-2 px-2 flex-grow-1 text-align-center cursor-pointer"><Arcade className="w-6 fill-dark" /></span>
                                         </li>
