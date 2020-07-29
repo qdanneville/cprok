@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "users_borrows_books",
+  "info": {
+    "name": "users_borrows_books"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "date": {
+      "type": "date"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "book": {
+      "model": "book"
+    }
+  }
+}

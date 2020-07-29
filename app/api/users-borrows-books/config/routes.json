@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/users-borrows-books",
+      "handler": "users-borrows-books.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/users-borrows-books/count",
+      "handler": "users-borrows-books.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/users-borrows-books/:id",
+      "handler": "users-borrows-books.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/users-borrows-books",
+      "handler": "users-borrows-books.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/users-borrows-books/:id",
+      "handler": "users-borrows-books.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/users-borrows-books/:id",
+      "handler": "users-borrows-books.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

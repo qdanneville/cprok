@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "books",
+  "info": {
+    "name": "Book"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "published_at": {
+      "type": "time"
+    },
+    "Resume": {
+      "type": "richtext"
+    },
+    "borrowed": {
+      "type": "boolean"
+    },
+    "author": {
+      "model": "author",
+      "via": "books"
+    }
+  }
+}
