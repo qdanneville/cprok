@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import useHeaderTitle from '../hooks/useHeaderTitle';
 
 const Browse = (props) => {
 
+    useHeaderTitle('My browsing page youhou');
+
     return (
-        <h2>Browse books</h2>
+        <h2>Browse</h2>
     )
 }
 

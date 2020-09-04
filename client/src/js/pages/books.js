@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Nav from '../components/nav';
+import Browse from '../components/browse'
 
 const Home = (props) => {
 
@@ -11,7 +12,7 @@ const Home = (props) => {
     return (
         <section>
             <Nav />
-            <h1>Home</h1>
+            <Browse />
         </section>
     )
 }

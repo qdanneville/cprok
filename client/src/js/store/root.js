@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 
 import books from './books'
+import header from './header'
 
 const createRootReducer = combineReducers({
-  books
+  books,
+  header
 });
 
 export default createRootReducer;

@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React, { useState } from 'react'
 import {
     BrowserRouter as Router,
     Switch,
@@ -10,15 +9,16 @@ import {
 import Calendar from '../calendar';
 import DashboardHome from './home';
 import Browse from '../browse';
+import Nav from '../nav';
 
 const Dashboard = (props) => {
+
     return (
-        <section>
-            <h1>Dashboard</h1>
+        <section className="flex h-100-vh">
             <Router>
-                <h1>main connected nav</h1>
-                <nav>
-                    <ul>
+                <nav className="bg-green p-6">
+                    <span>Left nav</span>
+                    <ul className="flex flex-col ">
                         <li>
                             <Link to="/dashboard/">Home</Link>
                         </li>
@@ -30,11 +30,22 @@ const Dashboard = (props) => {
                         </li>
                     </ul>
                 </nav>
-                <Switch>
-                    <Route path="/dashboard/browse/" component={Browse} />
-                    <Route path="/dashboard/calendar/" component={Calendar} />
-                    <Route path="/dashboard/" component={DashboardHome} />
-                </Switch>
+                <main className="bg-blue p-6 flex-grow-1">
+                    <Nav fromDashboard={true} />
+                    <section className="bg-salmon p-10">
+                        <Switch>
+                            <Route path="/dashboard/browse/">
+                                <Browse />
+                            </Route>
+                            <Route path="/dashboard/calendar/">
+                                <Calendar />
+                            </Route>
+                            <Route path="/dashboard/">
+                                <DashboardHome />
+                            </Route>
+                        </Switch>
+                    </section>
+                </main>
             </Router>
         </section>
     )

@@ -6,7 +6,6 @@ import configureStore from './store/store'
 
 import App from './App';
 
-
 module.exports = function svgrParcelPlugin(bundler) {
     // Parcel requires that the asset be passed in as a module path.
     bundler.addAssetType('svg', require.resolve('../assets/svg'))
