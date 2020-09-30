@@ -1,13 +1,18 @@
 import mysql, { Connection } from "mysql2"
 import databaseConfig from "../config/database"
 
+console.log(process.env.PRODUCTION);
+console.log(databaseConfig);
+
+
 const connection = mysql.createConnection({
-    host: databaseConfig.development.host,
-    user: databaseConfig.development.username,
-    password: databaseConfig.development.password,
-    database: databaseConfig.development.database,
-    socketPath: databaseConfig.development.socketPath
+    host: process.env.PRODUCTION ? databaseConfig.production.host : databaseConfig.development.host,
+    user: process.env.PRODUCTION ? databaseConfig.production.username : databaseConfig.development.username,
+    password: process.env.PRODUCTION ? databaseConfig.production.password : databaseConfig.development.password,
+    database: process.env.PRODUCTION ? databaseConfig.production.database : databaseConfig.development.database,
+    socketPath: process.env.PRODUCTION ? databaseConfig.production.socketPath : databaseConfig.development.socketPath
 });
+
 
 //Connecting to database
 connection.connect((err) => {
