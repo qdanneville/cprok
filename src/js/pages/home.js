@@ -48,7 +48,7 @@ const Home = (props) => {
 
         console.log(theme);
 
-        history.push("/quizz/");
+        history.push("/quizz");
         dispatch(initSession(mode, user.player_id, theme+1))
 
     }

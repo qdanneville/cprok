@@ -51,7 +51,7 @@ const Session = (props) => {
             setSuccess(false);
             dispatch(nextSessionStep(session, questions[session.steps + 1], success))
         }
-        else history.push('/result/')
+        else history.push('/result')
     }
 
     return (

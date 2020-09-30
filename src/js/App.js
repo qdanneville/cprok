@@ -36,9 +36,9 @@ const App = () => {
                 <Switch>
                     <Route path="/login" component={Login} />
                     <AuthRoute exact path="/" component={Home} />
-                    <AuthRoute path="/quizz/" component={Session} />
-                    <AuthRoute path="/result/" component={Result} />
-                    <AuthRoute path="/dashboard/" component={Dashboard} />
+                    <AuthRoute path="/quizz" component={Session} />
+                    <AuthRoute path="/result" component={Result} />
+                    <AuthRoute path="/dashboard" component={Dashboard} />
                 </Switch>
             </Layout>
         </Router>
