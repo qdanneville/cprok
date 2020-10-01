@@ -18,7 +18,7 @@ const Session = (props) => {
                 <i className="fill-white stroke-dark w-20 block mb-2 my-auto mb-10 mt-10"><Arcade /></i>
                 <hr className="bw-1 bc-dark w-33-per bs-solid br-10"></hr>
                 <Link className="btn" to="/">Retourner à l'accueil</Link>
-                <Link className="btn ml-4" to="/dashboard/">Aller sur votre dashboard</Link>
+                <Link className="btn ml-4" to="/dashboard">Aller sur votre dashboard</Link>
                 <hr className="bw-1 bc-dark w-33-per bs-solid br-10"></hr>
             </header>
         </section>

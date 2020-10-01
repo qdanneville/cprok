@@ -1,7 +1,8 @@
 import axios from 'axios';
+import config from '../../../config';
 
 const instance = axios.create({
-    baseURL: "http://146.59.155.142:3000/api/"
+    baseURL: config.API_BASE_URL
 })
 
 export const addAuth = token => {

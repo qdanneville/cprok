@@ -1,7 +1,5 @@
 const dotenv = require('dotenv').config();
 
-console.log(process.env);
-
 const config = {
   "development": {
     "username": "root",
