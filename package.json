@@ -1,6 +1,6 @@
 {
   "name": "quizz",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React - Axios - Local storage - Auth",
   "main": "index.js",
   "scripts": {
