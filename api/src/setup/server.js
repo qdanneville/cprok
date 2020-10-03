@@ -1,13 +1,13 @@
 // Imports
-import express from 'express'
-
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
-import dotenv from "dotenv"
 
 import router from "./router"
+
+console.log(process.env.PRIVATE_KEY);
+console.log(process.env.CERTIFICATE);
 
 const server = (server) => {
     console.info('SETUP - Loading modules...')
