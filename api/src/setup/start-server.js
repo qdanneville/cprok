@@ -5,11 +5,6 @@ import fs from "fs";
 import http from "http";
 import https from "https";
 
-console.log(process.env.PRIVATE_KEY);
-console.log(process.env.CERTIFICATE);
-
-console.log(fs);
-
 const StartServer = (server) => {
     console.info('SETUP - Starting server..')
 
@@ -18,7 +13,7 @@ const StartServer = (server) => {
 
     httpServer = http.createServer(server);
 
-    httpServer.listen(config.port, (error) => {
+    httpServer.listen(config.http_port, (error) => {
         if (error) {
             console.error('ERROR - Unable to start server.')
         } else {
@@ -31,13 +26,11 @@ const StartServer = (server) => {
     if (process.env.PRODUCTION) {
         const privateKey = fs.readFileSync(`${process.env.PRIVATE_KEY}`).toString();
         const certificate = fs.readFileSync(`${process.env.CERTIFICATE}`).toString();
-        console.log('PRIVATE KEY : ', privateKey);
-        console.log('CERTIFICATE : ', privateKey);
         const credentials = { key: privateKey, cert: certificate };
-        console.log('CREDENTIALS : ', credentials);
+        
         httpsServer = https.createServer(credentials, server);
 
-        httpsServer.listen(config.port, (error) => {
+        httpsServer.listen(config.https_port, (error) => {
             if (error) {
                 console.error('ERROR - Unable to start server.')
             } else {
