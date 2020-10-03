@@ -8,12 +8,11 @@ import https from "https";
 console.log(process.env.PRIVATE_KEY);
 console.log(process.env.CERTIFICATE);
 
+console.log(fs);
+
 const StartServer = (server) => {
     console.info('SETUP - Starting server..')
 
-    let privateKey = "";
-    let certificate = "";
-    let credentials = "";
     let httpServer = null;
     let httpsServer = null;
 
@@ -30,11 +29,11 @@ const StartServer = (server) => {
     // PRODUCTION BUILDS a HTTPS api
 
     if (process.env.PRODUCTION) {
-        privateKey = fs.readFileSync('privatekey.pem').toString();
-        certificate = fs.readFileSync('certificate.pem').toString();
+        const privateKey = fs.readFileSync(`${process.env.PRIVATE_KEY}`).toString();
+        const certificate = fs.readFileSync(`${process.env.CERTIFICATE}`).toString();
         console.log('PRIVATE KEY : ', privateKey);
         console.log('CERTIFICATE : ', privateKey);
-        credentials = { key: privateKey, cert: certificate };
+        const credentials = { key: privateKey, cert: certificate };
         console.log('CREDENTIALS : ', credentials);
         httpsServer = https.createServer(credentials, server);
 
