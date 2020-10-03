@@ -32,7 +32,10 @@ const StartServer = (server) => {
     if (process.env.PRODUCTION) {
         privateKey = fs.readFileSync('privatekey.pem').toString();
         certificate = fs.readFileSync('certificate.pem').toString();
+        console.log('PRIVATE KEY : ', privateKey);
+        console.log('CERTIFICATE : ', privateKey);
         credentials = { key: privateKey, cert: certificate };
+        console.log('CREDENTIALS : ', credentials);
         httpsServer = https.createServer(credentials, server);
 
         httpsServer.listen(config.port, (error) => {
